@@ -173,13 +173,12 @@ Data.equipment_create {
     description = "A robe of great magical capacity.",
     type = "armour",
 
-    shop_cost = {95,155},
+    shop_cost = {55,105},
 
     spr_item = "robe of mana",
 
     stat_bonuses = {
-        mp = 35, 
-        willpower = 2, 
+        mp = 35 
     }
 }
 

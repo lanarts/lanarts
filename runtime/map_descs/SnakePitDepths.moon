@@ -39,7 +39,7 @@ snake_pit_floor_plan = (rng) -> {
         {enemy: "Black Mamba", guaranteed_spawns: 2, chance: 25}
         {enemy: "Mouther", guaranteed_spawns: 3}
     }
-    item_groups: {{ItemGroups.basic_items, 8}, {{item: "Scroll of Experience", chance: 100}, 1}}
+    item_groups: {{ItemGroups.basic_items, 8}, {{item: ItemUtils.randart_generate(1).type, chance: 100}, 1}, {{item: "Scroll of Experience", chance: 100}, 1}}
     number_regions: 2
     room_radius: () -> rng\randomf(7,12)
     rect_room_num_range: {0, 0}

@@ -915,6 +915,22 @@ PosF configure_dir(GameState* gs, CombatGameInst* inst, float dx, float dy) {
     return {0,0};
 }
 
+PosF smooth_move(GameState* gs, CombatGameInst* inst, PosF direction) {
+    direction = configure_dir(gs, inst, direction.x, direction.y);
+    float x = inst->x, y = inst->y, radius = inst->radius;
+    float vx = direction.x;
+    float vy = direction.y;
+    if (gs->tile_radius_test(x + vx, y, radius)) {
+        vx = 0;
+    }
+    if (gs->tile_radius_test(x, y + vy, radius)) {
+        vy = 0;
+    }
+
+    return PosF(vx, vy);
+}
+
+
 void CombatGameInst::use_move(GameState *gs, const PosF& initial_dir, bool use_player_distance) {
     perf_timer_begin(FUNCNAME);
 
@@ -923,7 +939,7 @@ void CombatGameInst::use_move(GameState *gs, const PosF& initial_dir, bool use_p
 
     // Multiply by the move speed to get the displacement.
     // Note that players technically move faster when moving diagonally.
-    PosF direction = configure_dir(gs, this, initial_dir.x, initial_dir.y);
+    PosF direction = smooth_move(gs, this, initial_dir);
     vx = direction.x;
     vy = direction.y;
 

@@ -11,8 +11,8 @@ return OldMaps.create_map_desc table.merge OldMaps.Dungeon2[3], {
     label: "Temple Sanctum"
     on_generate: (map) ->
         ---------------------------------------------------------------------
-        -- Place key vault, along with 2 scrolls of experience   --
-        for type in *{"Azurite Key", "Scroll of Experience", "Scroll of Experience"}
+        -- Place key vault, along with 2 scrolls of experience and a randartsay --
+        for type in *{"Azurite Key", "Scroll of Experience", "Scroll of Experience", ItemUtils.randart_generate(1).type}
             if not place_vault map, Vaults.small_item_vault {
                 rng: map.rng
                 item_placer: (map_, xy) ->
