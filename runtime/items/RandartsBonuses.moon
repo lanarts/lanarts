@@ -38,7 +38,7 @@ for stat in *{"strength", "magic", "defence", "willpower"}
             @stat_bonuses[stat] += @rng\random(0, 4)
 
 _STAT_MULTIPLIER_BONUSES = {}
-for stat in *{"magic_cooldown_multiplier" , "melee_cooldown_multiplier", "ranged_cooldown_multiplier"}
+for stat in *{"magic_cooldown_multiplier" , "melee_cooldown_multiplier"}
     _STAT_MULTIPLIER_BONUSES[stat] = (level) =>
         for i=1,level
             @stat_multipliers[stat] += @rng\randomf(0, 0.15)

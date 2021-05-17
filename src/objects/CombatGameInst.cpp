@@ -847,11 +847,8 @@ int CombatGameInst::gain_xp_from(GameState* gs, CombatGameInst* inst) {
         return 0;
     }
 
-    double xpworth = ((EnemyInst*)inst)->xpworth();
-    // TODO track kills per team
-    double n_killed = (pc.n_enemy_killed(((EnemyInst*) inst)->enemy_type()) - 1) / pc.all_players().size();
-    // Level out at 5% of the original XP, after ~27 kills per player
-    xpworth *= std::max(0.05, pow(0.9, n_killed));
+    int xpworth = ((EnemyInst*)inst)->xpworth();
+    // May 16 2021 - Gallanthor wins. We won't decay XP for killing the same mob type anymore.
     return team_gain_xp(gs, xpworth, /*use bonus*/ true);
 }
 

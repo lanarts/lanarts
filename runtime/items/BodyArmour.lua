@@ -27,8 +27,7 @@ Data.equipment_create {
 
     stat_bonuses = { 
         defence = 3,
-        spell_cooldown_multiplier = 1.15,
-        ranged_cooldown_multiplier = 1.15,
+        spell_cooldown_multiplier = 1.15
     },
 }
 
@@ -58,8 +57,7 @@ Data.equipment_create {
 
     stat_bonuses = { 
         defence = 3,
-        spell_cooldown_multiplier = 1.35,
-        ranged_cooldown_multiplier = 1.35,
+        spell_cooldown_multiplier = 1.35
     },
 }
 
@@ -213,8 +211,7 @@ Data.equipment_create {
         mp = 10,
         defence = 3,
         willpower = 3,
-        spell_cooldown_multiplier = 1.05,
-        ranged_cooldown_multiplier = 1.05,
+        spell_cooldown_multiplier = 1.05
     },
     effects_granted = {"ArmourManaGainOnKill"}
 }

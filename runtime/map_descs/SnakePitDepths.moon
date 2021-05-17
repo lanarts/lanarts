@@ -76,6 +76,7 @@ make_template = (rng, back_links={}, forward_links={}) ->
                     MapUtils.spawn_item(map, item.type, item.amount, xy)
                     n_items_placed += 1
             })
+            -- Places a scroll of experience
             vault = SourceMap.area_template_create(Vaults.crypt_encounter_vault conf)
             return NewDungeons.place_feature(map, vault)
         _item_groups: () =>

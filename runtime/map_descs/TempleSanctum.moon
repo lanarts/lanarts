@@ -11,14 +11,14 @@ return OldMaps.create_map_desc table.merge OldMaps.Dungeon2[3], {
     label: "Temple Sanctum"
     on_generate: (map) ->
         ---------------------------------------------------------------------
-        -- Place key vault, along with a gold vault and 2 regular items.   --
-        for type in *{"Azurite Key", "Scroll of Experience", false}
+        -- Place key vault, along with 2 scrolls of experience   --
+        for type in *{"Azurite Key", "Scroll of Experience", "Scroll of Experience"}
             if not place_vault map, Vaults.small_item_vault {
                 rng: map.rng
                 item_placer: (map_, xy) ->
                     amount = 1
-                    if not type
-                        {:type, :amount} = ItemUtils.item_generate ItemGroups.enchanted_items
+                    -- if not type
+                    --     {:type, :amount} = ItemUtils.item_generate ItemGroups.enchanted_items
                     MapUtils.spawn_item(map_, type, amount, xy)
                 tileset: Tilesets.snake
             }

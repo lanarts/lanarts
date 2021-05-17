@@ -51,6 +51,7 @@ make_legend = (args, legend) ->
         }
         'X': {
             add: {SourceMap.FLAG_SEETHROUGH, M.FLAG_NO_ENEMY_SPAWN}
+            matches_none: {FLAGS_HAS_CONTENT}
             content: args.tileset.floor
             on_placement: (map, xy) ->
                 MapUtils.spawn_item(map, "Scroll of Experience", 1, xy)
@@ -912,22 +913,30 @@ M.crypt_encounter_vault = (args) -> table.merge M.small_item_vault(args), {
 .www.......
 wwpwwwwwww.
 1ieeepdppd+
-1ieeepdppd+
+1Xeeepdppd+
 wwppppwwww.
 .wwwwww....]=]
 [=[
 wwwwwww.
 1ppppww.
 1ieepd+.
-1ieepd+.
+1Xeepd+.
 1ppppww.
 wwwwwww.]=]
 [=[
 wwwwwww.
 1ppppp1.
 1ieeepd+
-1ieeepd+
+1Xeeepd+
 1ppppp1.
+wwwwwww.]=]
+[=[
+www.....
+wpww....
+1ppwww..
+1ieepd+.
+1Xeepd+.
+1peppd+.
 wwwwwww.]=]
     }
 }

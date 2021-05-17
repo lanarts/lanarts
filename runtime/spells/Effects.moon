@@ -123,20 +123,22 @@ DataW.effect_create {
             if obj\is_local_player()
                 EventLog.add("You are no longer exhausted.", {200,200,255})
 }
-DataW.effect_create {
-    name: "Expedited"
-    stat_func: () =>
-        if new.speed < 6
-            new.speed = math.max(new.speed * 1.5, 6)
-        new.ranged_cooldown_multiplier /= 1.5
-    can_use_rest: false
-    finish_func: (obj) =>
-        for _ in screens()
-            if obj\is_local_player()
-                EventLog.add("You are no longer expedited.", {255,200,200})
-    effected_colour: {220,220,255}
-    effected_sprite: "haste effected"
-}
+
+-- May 16 
+-- DataW.effect_create {
+--     name: "Expedited"
+--     stat_func: () =>
+--         if new.speed < 6
+--             new.speed = math.max(new.speed * 1.5, 6)
+--         new.range_cooldown_multiplier /= 1.5
+--     can_use_rest: false
+--     finish_func: (obj) =>
+--         for _ in screens()
+--             if obj\is_local_player()
+--                 EventLog.add("You are no longer expedited.", {255,200,200})
+--     effected_colour: {220,220,255}
+--     effected_sprite: "haste effected"
+-- }
 
 DataW.effect_create {
     name: "Charge"
@@ -233,7 +235,6 @@ DataW.effect_create {
     fade_out: 5
     stat_func: (obj, old, new) =>
         new.melee_cooldown_multiplier *= 2
-        new.ranged_cooldown_multiplier *= 2
         new.spell_cooldown_multiplier *= 2
         new.speed /= 2
 }
@@ -909,12 +910,6 @@ DataW.effect_create {
 }
 
 DataW.effect_create {
-    name: "EnemyHyperProjectile"
-    stat_func: (effect, obj, old, new) ->
-        new.ranged_cooldown_multiplier *= 0.1
-}
-
-DataW.effect_create {
     name: "KnockbackWeapon"
     console_draw_func: (player, get_next) =>
         draw_weapon_console_effect(player, M._fleeing, "+10% chance of knockback", get_next())
@@ -954,9 +949,6 @@ for name in *{"Ranger", "Fighter", "Templar", "Rogue", "Green Mage", "Black Mage
         stat_func: (obj, old, new) =>
             if name ~= "Fighter"
                 new.melee_cooldown_multiplier *= 1.25
-            if name ~= "Ranger" or name ~= "Fighter"
-                new.ranged_cooldown_multiplier *= 1.25
-
         init_func: (caster) =>
             @kill_tracker = caster.kills
             @links = {}

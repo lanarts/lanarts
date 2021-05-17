@@ -46,9 +46,10 @@ define_stat_bonus "Power",
     "Gain Magic.",
     {magic: 2}
 
-define_stat_bonus "Quickshot",
-    "Increase firing rate.",
-    {ranged_cooldown_multiplier: 1/(1.08)}
+-- May 16 2021 Remove firing rate buffs
+-- define_stat_bonus "Quickshot",
+--     "Increase firing rate.",
+--     {ranged_cooldown_multiplier: 1/(1.08)}
 
 define_stat_bonus "Quickcast",
     "Increase casting rate.",

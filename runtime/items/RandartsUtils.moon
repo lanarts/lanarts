@@ -125,7 +125,6 @@ apply_core_stat_buff = () =>
         return @add_bonus @rng\random_choice {
             --"magic_cooldown_multiplier"
             --"melee_cooldown_multiplier"
-            --"ranged_cooldown_multiplier"
             "Speedbolt"
         }
     return @add_bonus @rng\random_choice {
@@ -136,7 +135,6 @@ apply_core_stat_buff = () =>
         "Regeneration"
         "Wit"
         "Power"
-        "Quickshot"
         "Quickcast"
         "Flurry"
         "Savage"

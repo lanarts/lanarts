@@ -143,8 +143,8 @@ void MonsterController::pre_step(GameState* gs) {
                 eb.current_action = EnemyBehaviour::INACTIVE;
             }
         } else {
-            if (eb.current_action == EnemyBehaviour::INACTIVE
-                    && e->cooldowns().is_hurting()) {
+            if (eb.current_action == EnemyBehaviour::INACTIVE) {
+//                    && e->cooldowns().is_hurting()) {
                 eb.current_action = EnemyBehaviour::CHASING_PLAYER;
             }
             if (actor == NULL

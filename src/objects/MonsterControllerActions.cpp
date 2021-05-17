@@ -38,12 +38,11 @@ static bool choose_random_direction(GameState* gs, EnemyInst* e, float& vx,
 
 	for (int attempts = 0; attempts < MAX_ATTEMPTS; attempts++) {
 		float direction = mt.rand(360) * deg2rad;
-//        vx = cos(direction) * movespeed * (MAX_ATTEMPTS - attempts + 1), vy = sin(direction) *  (MAX_ATTEMPTS - attempts + 1);
         float raw_x = cos(direction), raw_y = sin(direction);
         vx = raw_x * movespeed, vy = raw_y * movespeed;
-		int nx = iround(e->x + vx * TILE_SIZE);
-		int ny = iround(e->y + vy * TILE_SIZE);
-		bool solid = gs->tile_radius_test(nx, ny, TILE_SIZE);
+		int nx = iround(e->x + raw_x * TILE_SIZE);
+		int ny = iround(e->y + raw_y * TILE_SIZE);
+		bool solid = gs->tile_radius_test(nx, ny, e->radius);
 		if (!solid) {
 			return true;
 		}
@@ -85,14 +84,14 @@ bool potentially_randomize_movement(GameState* gs, EnemyInst* e) {
 		if (!randomized && gs->rng().rand(32) == 0
 				&& choose_random_direction(gs, e, er.vx, er.vy)) {
 			event_log("Enemy id=%d going (x=%.2f, y=%.2f) => (vx=%.2f, vy=%.2f)", std::max(0, e->id), e->x, e->y, er.vx, er.vy);
-			er.random_walk_timer = gs->rng().rand(TILE_SIZE, TILE_SIZE * 4) / e->effective_stats().movespeed;
+			er.random_walk_timer = gs->rng().rand(TILE_SIZE / 2, TILE_SIZE * 2) / e->effective_stats().movespeed;
 			randomized = true;
 		}
 		if (randomized) {
 			int nx = iround(e->x + er.vx), ny = iround(e->y + er.vy);
 			bool solid = gs->tile_radius_test(nx, ny, e->radius);
 			if (!solid) {
-				e->vx = er.vx, e->vy = er.vy;
+				e->use_move(gs, PosF(er.vx, er.vy));
 			} else {
 				er.random_walk_timer = 0;
 				er.successful_hit_timer = 0;
@@ -323,7 +322,7 @@ void MonsterController::monster_follow_path(GameState* gs, EnemyInst* e) {
 //        int nx = iround(e->x + er.vx), ny = iround(e->y + er.vy);
 //            e->vx = er.vx, e->vy = er.vy;
         e->use_move(gs, {er.vx, er.vy}, false);
-        er.random_walk_timer -= 1;
+        eb.current_action = EnemyBehaviour::INACTIVE;
         return;
 
 //        bool solid = gs->tile_radius_test(nx, ny, TILE_SIZE);
@@ -331,7 +330,7 @@ void MonsterController::monster_follow_path(GameState* gs, EnemyInst* e) {
 //            return;
 //        } else {
 //            er.random_walk_timer = 0;
-//            er.successful_hit_timer = 0;
+//            er.successful_hit_timer = 0;d
 //            er.damage_taken_timer = 0;
 //        }
 
