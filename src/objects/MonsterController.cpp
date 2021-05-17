@@ -176,12 +176,13 @@ void MonsterController::pre_step(GameState* gs) {
             }
             // Handle inactive/wandering monsters - find new
             if (e->vx == 0 && e->vy == 0) {
-                if (eb.current_action == EnemyBehaviour::INACTIVE) {
-                    monster_wandering(gs, e);
-                } else {
-                    //if (eb.current_action == EnemyBehaviour::FOLLOWING_PATH)
-                    monster_follow_path(gs, e);
-                }
+                monster_follow_path(gs, e);
+//                if (eb.current_action == EnemyBehaviour::INACTIVE) {
+//                    monster_wandering(gs, e);
+//                } else {
+//                    //if (eb.current_action == EnemyBehaviour::FOLLOWING_PATH)
+//                    monster_follow_path(gs, e);
+//                }
             }
         }
     }

@@ -104,7 +104,7 @@ obj_id GameMapState::add_instance(GameState* gs, GameInst* inst) {
 }
 
 void GameMapState::step(GameState* gs, bool simulate_monsters) {
-	const int STEPS_TO_SIMULATE = 1000;
+	const int STEPS_TO_SIMULATE = 1200; // 20 seconds
 
 	bool game_has_players = !gs->player_data().all_players().empty();
 	bool has_player_in_level = gs->player_data().level_has_player(id()) || !game_has_players;

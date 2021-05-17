@@ -181,10 +181,11 @@ void MonsterController::set_monster_headings(GameState* gs,
 		int actor_id = eois[i].actor_id;
         event_log("Enemy id=%d has move speed %f chasing actor id=%d", std::max(0, e->id), movespeed, actor_id);
 		CombatGameInst* p = gs->get_instance<CombatGameInst>(actor_id);
+        EnemyBehaviour& eb = e->behaviour();
         if (p == NULL) {
+            eb.current_action = EnemyBehaviour::INACTIVE;
             continue;
         }
-		EnemyBehaviour& eb = e->behaviour();
 
 		eb.current_action = EnemyBehaviour::CHASING_PLAYER;
 		eb.path.clear();
@@ -410,10 +411,10 @@ static Pos monster_wander_position(GameState* gs, EnemyInst* e) {
 	// Complex stairs-avoidance logic follows
 	int n_considered = 0;
 	float score_to_beat = -10000;
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 25; i++) {
 		Pos candidate = {
-			squish(exy.x + mt.rand(-2, 3), 0, tile.tile_width() - 1),
-			squish(exy.y + mt.rand(-2, 3), 0, tile.tile_height() - 1)
+			squish(exy.x + mt.rand(-3, 4), 0, tile.tile_width() - 1),
+			squish(exy.y + mt.rand(-3, 4), 0, tile.tile_height() - 1)
 		};
 		if (tile.is_solid(candidate)) {
 			continue;
@@ -432,7 +433,6 @@ static Pos monster_wander_position(GameState* gs, EnemyInst* e) {
 	if (n_considered == 0) {
 		return Pos();
 	}
-    map.attraction_map[target] -= 1;
 	return target;
 }
 

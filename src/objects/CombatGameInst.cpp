@@ -956,7 +956,7 @@ void CombatGameInst::use_move(GameState *gs, const PosF& initial_dir, bool use_p
         }
         if (reduce_vy) {
             vy *= 0.5;
-        }_a
+        }
     } else {
         float effective_speed = sqrt(vx * vx + vy * vy);
         if (effective_speed > mag) {
