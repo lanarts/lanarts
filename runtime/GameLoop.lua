@@ -55,6 +55,18 @@ function M.game_step(steponly)
         return false
     end
 
+    for i=1,settings.frame_action_repeat do
+        perf.timing_begin("**Step**")
+        if not M.loop_control.game_is_paused and not GameState.step() then
+            return false
+        end
+        
+        if not GameState.input_handle() then
+            return false
+        end
+        perf.timing_end("**Step**")
+    end
+
     local surplus = settings.time_per_step - timer:get_milliseconds()
 
     print(timer:get_milliseconds(), " MS => ", last_timer and last_timer:get_milliseconds())
@@ -62,9 +74,6 @@ function M.game_step(steponly)
     last_timer = timer
     if not HEADLESS and not __EMSCRIPTEN then
         GameState.wait(surplus)
-    -- elseif __EMSCRIPTEN then
-    --     -- Underestimate our time needed
-    --     GameState.wait(surplus - 0.5)
     end
     perf.timing_end("**Surplus**")
 

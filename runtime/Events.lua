@@ -21,7 +21,7 @@ function events.PlayerDeath(player)
         end
         GlobalData.n_lives = GlobalData.n_lives - 1
         -- On soft-core multiplayer, die if everyone is a ghost:
-        if GlobalData.n_lives < 0  then
+        if GlobalData.n_lives < 0 then
             GameState.score_board_store()
             return true
         end

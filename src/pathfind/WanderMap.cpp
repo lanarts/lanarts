@@ -75,7 +75,7 @@ void WanderMap::generate_wander_map_section(const Pos& source_xy) {
 			if (!(*_solidity)[tile_xy] || node->open) {
 				paths.fill_paths_tile_region(tile_xy, region, false /* Incrementally fill */);
 			}
-			_squares[tile_xy].distance_to_source = node->distance;
+			_squares[tile_xy].distance_to_source = (short)node->distance;
 		}
 		tile_xy.x = region.x1;
 	}
@@ -93,7 +93,7 @@ void WanderMap::generate_wander_map_section(const Pos& source_xy) {
 			if (!(*_solidity)[tile_xy] && node->open) {
 				paths.fill_paths_tile_region(tile_xy, region, false /* Incrementally fill */);
 			}
-			_squares[tile_xy].distance_to_source = node->distance;
+			_squares[tile_xy].distance_to_source = (short)node->distance;
 		}
 	}
 }

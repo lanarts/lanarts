@@ -85,6 +85,10 @@ void FeatureInst::init(GameState* gs) {
 			gs->tiles().set_seethrough(tile_xy, false);
 		}
 	}
+	if (feature == PORTAL) {
+		auto& map = gs->get_level(current_floor)->attraction_map();
+		map.static_repell(ipos().divided(TILE_SIZE));
+	}
 }
 
 void FeatureInst::deinit(GameState *gs) {

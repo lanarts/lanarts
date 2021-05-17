@@ -22,6 +22,7 @@ GameMapState::GameMapState(int levelid, ldungeon_gen::MapPtr source_map, const S
 		_inst_set(size.w, size.h),
 		_monster_controller(wandering_flag),
 		_is_simulation(is_simulation) {
+	_attraction_map.init(tiles().solidity_map());
 }
 
 GameMapState::~GameMapState() {
@@ -63,7 +64,7 @@ void GameMapState::serialize(GameState* gs, SerializeBuffer& serializer) {
 	serializer.write(_steps_left);
 	serializer.write(_size);
 	serializer.write(_is_simulation);
-
+    serializer.write_container(attraction_map().attraction_map._internal_vector());
 	tiles().serialize(serializer);
 	game_inst_set().serialize(gs, serializer);
 	monster_controller().serialize(serializer);
@@ -79,6 +80,7 @@ void GameMapState::deserialize(GameState* gs, SerializeBuffer& serializer) {
 	serializer.read(_steps_left);
 	serializer.read(_size);
 	serializer.read(_is_simulation);
+    serializer.read_container(attraction_map().attraction_map._internal_vector());
 
 	tiles().deserialize(serializer);
 	collision_avoidance().clear();

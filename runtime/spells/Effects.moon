@@ -1078,9 +1078,11 @@ enemy_berserker_step = (enemy) ->
 
 DataW.effect_create {
     name: "Enraging"
+    effected_sprite: "spr_effects.i-loudness-transparent"
     apply_func: (mon) =>
         @damage_tracker = 0
-        @damage_interval = mon.stats.max_hp / 3
+        -- Change May 16, make interval 66% of hp instead of 33%
+        @damage_interval = mon.stats.max_hp * 2 / 3
         @next_hp_threshold = mon.stats.max_hp - @damage_interval
     on_receive_damage_func: (attacker, mon, dmg) =>
         @damage_tracker += dmg

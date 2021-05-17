@@ -10,6 +10,7 @@
 
 #include <lcommon/geometry.h>
 #include <ldungeon_gen/Map.h>
+#include <pathfind/AttractionMap.h>
 
 #include "collision_avoidance/CollisionAvoidance.h"
 #include "objects/MonsterController.h"
@@ -129,6 +130,10 @@ public:
 	    return _source_map;
 	}
 
+    AttractionMap& attraction_map() {
+        return _attraction_map;
+    }
+
     int& vision_radius() {
         return _vision_radius;
     }
@@ -147,6 +152,7 @@ private:
 	Size _size;
 	GameTiles _tiles;
 	GameInstSet _inst_set;
+	AttractionMap _attraction_map;
 	ldungeon_gen::MapPtr _source_map;
 	MonsterController _monster_controller;
 	CollisionAvoidance _collision_avoidance;

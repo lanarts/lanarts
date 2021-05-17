@@ -149,12 +149,18 @@ run_lanarts = (raw_args) ->
         -- (6) If Escape is pressed, tell user about shift+escape
         elseif Keys.key_pressed(Keys.ESCAPE)
             for _ in screens()
-                EventLog.add("Press Shift + Esc to exit, your progress will be saved.")
+                if __EMSCRIPTEN
+                    EventLog.add("Press Ctrl + Esc to exit, your progress will be saved.")
+                else
+                    EventLog.add("Press Shift + Esc to exit, your progress will be saved.")
         -- (7) Backup save every ~5 minutes
         elseif GameState.frame > 0 and GameState.frame % (60 * 60 * 5) == 0  -- Every 5 minutes at 60FPS
             for _ in screens()
                 EventLog.add("BACKING UP SAVE!", COL_WHITE)
-            GameState.save((args.save or "saves/savefile.save") .. ".backup." .. GameState.frame)
+            if __EMSCRIPTEN
+                GameState.save("saves/savefile.save")
+            else
+                GameState.save((args.save or "saves/savefile.save") .. ".backup." .. GameState.frame)
 
         -- (8) Loop again
         return game_step

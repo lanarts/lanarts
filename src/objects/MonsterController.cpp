@@ -154,7 +154,6 @@ void MonsterController::pre_step(GameState* gs) {
             }
         }
 
-
         if (actor != NULL && eb.current_action == EnemyBehaviour::CHASING_PLAYER) {
             // Handle hostile/aggro monsters
             event_log("Enemy id=%d has enemy of interest %d", std::max(0,e->id), std::max(0,actor->id));

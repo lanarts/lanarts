@@ -38,6 +38,7 @@
 #include "AnimatedInst.h"
 #include "CombatGameInst.h"
 #include "ProjectileInst.h"
+#include "objects/collision_filters.h"
 
 CombatGameInst::~CombatGameInst() {
     delete field_of_view;
@@ -863,4 +864,105 @@ void CombatGameInst::use_mp(GameState* gs, int mp) {
     effects.for_each([&](Effect& eff) {
         lcall(eff.method("on_use_mp"), /*args:*/ eff.state, this, mp);
     });
+}
+
+PosF configure_dir(GameState* gs, CombatGameInst* inst, float dx, float dy) {
+    auto is_solid = [&](Pos xy) -> bool {
+        if (xy.x < 0 || xy.x >= gs->tiles().tile_width()) {
+            return true;
+        }
+        if (xy.y < 0 || xy.y >= gs->tiles().tile_height()) {
+            return true;
+        }
+        return (*gs->tiles().solidity_map())[xy];
+    };
+
+    float x = inst->x, y = inst->y;
+    float radius = inst->radius;
+    Pos tile_xy;
+    if (!gs->tile_radius_test(x + dx, y + dy, radius, true, -1, &tile_xy)) {
+        return {dx, dy};
+    }
+
+    if (fabs(dx) > 0.1 && fabs(dy) > 0.1) {
+        float eff_mag = std::max(fabs(dx), fabs(dy));
+        Pos dir = dx < 0 ? Pos(-eff_mag, 0) : Pos(eff_mag, 0);
+        if (!gs->tile_radius_test(x + dir.x, y + dir.y, radius)) {
+            return dir;
+        }
+        dir = dy < 0 ? Pos(0, -eff_mag) : Pos(0, eff_mag);
+        if (!gs->tile_radius_test(x + dir.x, y + dir.y, radius)) {
+            return dir;
+        }
+    }
+    // Nothing worked so far, try alternate directions:
+    for (int i = 1; i <= 4; i++) {
+        auto clear_in_dir = [&](float dx, float dy) {
+            Pos xy = tile_xy + Pos(dx * i, dy * i);
+            return !is_solid(xy) && (!inst->field_of_view || inst->field_of_view->within_fov(xy.x, xy.y));
+        };
+        if (fabs(dx) <= 0.1 && clear_in_dir(1, 0)) {
+            return {fabs(dy), 0};
+        }
+        if (fabs(dx) <= 0.1 && clear_in_dir(-1, 0)) {
+            return {-fabs(dy), 0};
+        }
+        if (fabs(dy) <= 0.1 && clear_in_dir(0, -1)) {
+            return {0, -fabs(dx)};
+        }
+
+        if (fabs(dy) <= 0.1 && clear_in_dir(0, 1)) {
+            return {0, fabs(dx)};
+        }
+    }
+    return {0,0};
+}
+
+void CombatGameInst::use_move(GameState *gs, const PosF& initial_dir, bool use_player_distance) {
+    perf_timer_begin(FUNCNAME);
+
+    // Get the effective move speed:
+    float mag = effective_stats().movespeed;
+
+    // Multiply by the move speed to get the displacement.
+    // Note that players technically move faster when moving diagonally.
+    PosF direction = configure_dir(gs, this, initial_dir.x, initial_dir.y);
+    vx = direction.x;
+    vy = direction.y;
+
+    if (use_player_distance) {
+        //Smaller radius enemy pushing test, can intercept enemy radius but not too far
+        bool reduce_vx = false, reduce_vy = false;
+        EnemyInst *alreadyhitting[5] = {NULL, NULL, NULL, NULL, NULL};
+        gs->object_radius_test(this, (GameInst **) alreadyhitting, 5,
+                               &enemy_colfilter, x, y, radius);
+        for (int i = 0; i < 5; i++) {
+            if (alreadyhitting[i]) {
+                if (vx < 0 == ((alreadyhitting[i]->x - x + vx * 2) < 0)) {
+                    reduce_vx = true;
+                }
+                if (vy < 0 == ((alreadyhitting[i]->y - y + vy * 2) < 0)) {
+                    reduce_vy = true;
+                }
+            }
+        }
+        // Rule change Dec 21,2019: Berserk stops slowdown due to hurting
+        if (cooldowns().is_hurting() && effects.get_active("Berserk") == nullptr) {
+            reduce_vx = true;
+            reduce_vy = true;
+        }
+        if (reduce_vx) {
+            vx *= 0.5;
+        }
+        if (reduce_vy) {
+            vy *= 0.5;
+        }_a
+    } else {
+        float effective_speed = sqrt(vx * vx + vy * vy);
+        if (effective_speed > mag) {
+            vx *= mag / effective_speed;
+            vy *= mag / effective_speed;
+        }
+    }
+    perf_timer_end(FUNCNAME);
 }

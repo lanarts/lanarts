@@ -65,6 +65,8 @@ public:
 	virtual void signal_killed_enemy() {
 	}
 
+	virtual void use_move(GameState* gs, const PosF& xy, bool use_player_distance = true);
+
 	CombatStats& stats();
 	CoreStats& core_stats();
 	ClassStats& class_stats();

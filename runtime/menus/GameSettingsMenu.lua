@@ -165,7 +165,7 @@ local function respawn_toggle_create()
     return toggle
 end
 
-local function frame_action_repeat_toggle_create()
+local function emscripten_speed_toggle()
     local toggle = {
         size = SETTINGS_BOX_SIZE,
         large_font = BIG_SETTINGS_FONT,
@@ -176,9 +176,9 @@ local function frame_action_repeat_toggle_create()
         -- Toggle the connection type
         local mouseover = mouse_over(xy, self.size)
         if Mouse.mouse_left_pressed and mouseover then
-            settings.frame_action_repeat = (settings.frame_action_repeat + 1) % 5
+            settings.frame_action_repeat = (settings.frame_action_repeat + 1) % 2
         elseif Mouse.mouse_right_pressed and mouseover then
-            settings.frame_action_repeat = (settings.frame_action_repeat - 1) % 5
+            settings.frame_action_repeat = (settings.frame_action_repeat - 1) % 2
         end
     end
 
@@ -186,12 +186,13 @@ local function frame_action_repeat_toggle_create()
 
         local x,y = unpack(xy)
         local w, h = unpack(self.size)
-
-        self.font:draw( {color=COL_GREEN, origin = Display.LEFT_CENTER}, { x + 8, y + h / 2 },
-            (settings.frame_action_repeat+1) .. 'x'
+        
+        local text = settings.frame_action_repeat == 0 and "Normal" or "Double Speed!"
+        self.font:draw( {color=COL_GREEN, origin = Display.LEFT_CENTER}, { x + 80, y + h / 2 },
+            text
         )
-        self.font:draw( {color = COL_PALE_GREEN, origin = Display.LEFT_CENTER}, { x + 40, y + h / 2 },
-            "Network Skip Rate"
+        self.font:draw( {color = COL_PALE_GREEN, origin = Display.LEFT_CENTER}, { x + 8, y + h / 2 },
+            "Game Speed"
         )
 
         local box_color = mouse_over(xy, self.size) and COL_GOLD or COL_PALE_GREEN
@@ -393,7 +394,12 @@ local function center_setting_fields_create()
             fields:add_instance( respawn_toggle_create() )
         end
 
-        if not __EMSCRIPTEN then
+
+        if __EMSCRIPTEN then
+            if current_setting ~= Network.CLIENT then
+                fields:add_instance( emscripten_speed_toggle() )
+            end
+        elseif not __EMSCRIPTEN then
             if current_setting ~= Network.CLIENT then
                 fields:add_instance( speed_toggle_create() )
             end
@@ -402,9 +408,10 @@ local function center_setting_fields_create()
                 fields:add_instance( host_IP_field_create() )
             end
 
-            if current_setting == Network.SERVER then
-                fields:add_instance( frame_action_repeat_toggle_create() )
-            end
+            -- TODO frame action repeat has been repurposed
+            -- if current_setting == Network.SERVER then
+            --     fields:add_instance( frame_action_repeat_toggle_create() )
+            -- end
 
             local name_field = name_field_create( settings_text_field_params() )
             fields:add_instance(name_field)

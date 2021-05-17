@@ -143,7 +143,7 @@ file(GLOB lanarts_tests RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
        tests/*
 )
 
-add_executable( lanarts ${lanarts_src} ${lanarts_tests} util/currdir.hpp gamestate/map_operations.h gamestate/MapDefEntry.h)
+add_executable( lanarts ${lanarts_src} ${lanarts_tests} util/currdir.hpp gamestate/map_operations.h gamestate/MapDefEntry.h pathfind/AttractionMap.cpp)
 CHECK_INCLUDE_FILE( bfd.h HAS_BFD ) 
 if ( HAS_BFD) 
     set( BACKTRADE_DEP bfd ) 

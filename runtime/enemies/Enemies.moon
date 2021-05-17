@@ -1080,6 +1080,7 @@ DataW.enemy_create {
         willpower: 15
     }
     effects_active: {
+        "Enraging",
         {"PoisonedWeapon", {poison_percentage: 0.25}}
     }
 }
