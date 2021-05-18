@@ -1,6 +1,7 @@
 Tilesets = require "tiles.Tilesets"
 MapUtils = require "maps.MapUtils"
 OldMaps = require "maps.OldMaps"
+ItemUtils = require "maps.ItemUtils"
 
 Vaults = require "maps.Vaults"
 {:place_vault_in} = require "maps.VaultUtils"
@@ -139,6 +140,14 @@ place_hive = (region_set) ->
             entrance\link_portal(portal, "spr_gates.exit_dungeon")
     }
 
+place_one_randart = () -> 
+    state = {placed: false}
+    return (map, xy) ->
+        if not state.placed
+            state.placed = true
+            item = ItemUtils.randart_generate(1)
+            MapUtils.spawn_item(map, item.type, item.amount, xy)
+
 place_temple = (region_set) ->
     entrance = require("map_descs.TempleEntrance")\linker()
     chamber = require("map_descs.TempleChamber")\linker()
@@ -149,7 +158,7 @@ place_temple = (region_set) ->
 
     return place_vault_in region_set, Vaults.sealed_dungeon {
         tileset: Tilesets.temple
-        gold_placer: (map, xy) -> nil -- dont need gold here
+        gold_placer: place_one_randart()
         door_placer: (map, xy) -> MapUtils.spawn_door(map, xy)
         dungeon_placer: callable_once (map, xy) ->
             portal = MapUtils.spawn_portal(map, xy, "spr_gates.enter_temple")
@@ -166,6 +175,7 @@ place_snake_pit = (region_set) ->
     -- Link to snake pit entrance
     return place_vault_in region_set, Vaults.sealed_dungeon {
         tileset: Tilesets.snake
+        gold_placer: place_one_randart()
         door_placer: (map, xy) ->
             MapUtils.spawn_door(map, xy)
         dungeon_placer: callable_once (map, xy) ->
