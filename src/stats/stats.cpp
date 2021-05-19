@@ -74,9 +74,8 @@ void CoreStats::apply_as_bonus(const CoreStats& bonus_stats) {
 //	mp += bonus_stats.mp;
 	max_mp += bonus_stats.max_mp;
 
-	strength += bonus_stats.strength;
+	powerfulness += bonus_stats.powerfulness;
 	defence += bonus_stats.defence;
-	magic += bonus_stats.magic;
 	willpower += bonus_stats.willpower;
 	spell_velocity_multiplier *= bonus_stats.spell_velocity_multiplier;
 
@@ -85,14 +84,14 @@ void CoreStats::apply_as_bonus(const CoreStats& bonus_stats) {
 }
 
 Range CoreStatMultiplier::calculate_range(const CoreStats& stats) const {
-	float stats_sum = stats.strength * strength + stats.defence * defence
-			+ stats.magic * magic + stats.willpower * willpower;
+	float stats_sum = stats.powerfulness * powerfulness + stats.defence * defence
+			+ stats.willpower * willpower;
 	return Range(base.min + round(stats_sum), base.max + round(stats_sum));
 }
 
 float CoreStatMultiplier::calculate(MTwist& mt, const CoreStats& stats) const {
-	float stats_sum = stats.strength * strength + stats.defence * defence
-			+ stats.magic * magic + stats.willpower * willpower;
+	float stats_sum = stats.powerfulness * powerfulness + stats.defence * defence
+			+ stats.willpower * willpower;
 	return stats_sum + mt.rand(base);
 }
 
@@ -164,10 +163,9 @@ CoreStats parse_core_stats(const LuaField& value, bool required) {
 	core.hpregen = defaulted(value, "hpregen", 0.0f);
 	core.mpregen = defaulted(value, "mpregen", 0.0f);
 
-	core.strength = defaulted(value, "strength", 0);
+	core.powerfulness = defaulted(value, "powerfulness", 0);
 	core.defence = defaulted(value, "defence", 0);
 
-	core.magic = defaulted(value, "magic", 0);
 	core.willpower = defaulted(value, "willpower", 0);
 	return core;
 }
@@ -181,8 +179,7 @@ CoreStatMultiplier parse_core_stat_multiplier(const LuaField& value) {
 		return sm;
 	}
 	sm.base = defaulted(lua_util::make_pair_if_num(value["base"]), Range(0,0));
-	sm.strength = defaulted(value, "strength", 0.0f);
-	sm.magic = defaulted(value, "magic", 0.0f);
+	sm.powerfulness = defaulted(value, "powerfulness", 0.0f);
 	sm.defence = defaulted(value, "defence", 0.0f);
 	sm.willpower = defaulted(value, "willpower", 0.0f);
 	return sm;

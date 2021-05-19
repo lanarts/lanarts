@@ -57,7 +57,7 @@ Data.equipment_create {
 
     stat_bonuses = {
         magic = 1,
-        strength = 1,
+        powerfulness = 1,
         defence = 1,
         willpower = 1,
     },

@@ -32,7 +32,7 @@ _STAT_BONUSES = {
         for i=1,level
             @stat_bonuses.spell_velocity_multiplier += @rng\randomf(0, 0.15)
 }
-for stat in *{"strength", "magic", "defence", "willpower"}
+for stat in *{"powerfulness", "magic", "defence", "willpower"}
     _STAT_BONUSES[stat] = (level) =>
         for i=1,level
             @stat_bonuses[stat] += @rng\random(0, 4)
@@ -123,10 +123,9 @@ Bonuses = newtype {
             hp: 0
             hpregen: 0
             mpregen: 0
-            strength: 0
+            powerfulness: 0
             defence: 0
             willpower: 0
-            magic: 0
             spell_velocity_multiplier: 1.0
         }
         @stat_multipliers = {
@@ -149,6 +148,7 @@ Bonuses = newtype {
     add_bonus: (bonus, level = @level) =>
         if not BONUSES[bonus] and @_added_bonuses[bonus]
             return false
+        pretty(bonus)
         _BONUSES[bonus](@, level)
         @_added_bonuses[bonus] = true
         return true
@@ -161,10 +161,9 @@ Bonuses = newtype {
             @stat_bonuses.hp / 20
             @stat_bonuses.hpregen / (2.0 / 60)
             @stat_bonuses.mpregen / (2.0 / 60)
-            @stat_bonuses.strength
+            @stat_bonuses.powerfulness
             @stat_bonuses.defence
             @stat_bonuses.willpower
-            @stat_bonuses.magic
             @enchantment / 2
             (1 - @stat_bonuses.spell_velocity_multiplier)  / 0.25
         }
@@ -238,8 +237,8 @@ Bonuses = newtype {
         for {spell,v} in *@spells
             append base.spells_granted, spell
         if @enchantment > 0
-            for i=1,2
-                base.damage.base[i] = math.ceil(base.damage.base[i] * (1 + @enchantment * 0.1))
+            -- Each + on the weapon acts like a + to power
+            base.power.base = @enchantment
             base.name = "+#{@enchantment} #{base.name}"
         base.shop_cost or= {0,0}
         created = compile_bonuses(base, @newstyle_bonuses)

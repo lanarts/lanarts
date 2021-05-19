@@ -36,7 +36,7 @@ static float damage_multiplier(float power, float resistance) {
 // This stat formula is a lot simpler than what it originally was.
 // Simpler ends up being easier to understand and balance.
 // Now, there is just a base damage, and a multiplier based on the defenders resistance and the attacker's power.
-// This is later multiplied by type resistances / strengths.
+// This is later multiplied by type resistances / powerfulnesss.
 static float basic_damage_formula(const EffectiveAttackStats& attacker, float resistance) {
 	float mult = damage_multiplier(attacker.power, resistance) * attacker.type_multiplier;
 	float result = attacker.damage * mult;

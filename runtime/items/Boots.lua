@@ -43,7 +43,7 @@ Data.equipment_create {
 
 Data.equipment_create {
     name = "Troll Boots",
-    description = "Heavy boots that enchant the user which regenerative properties and extra strength.",
+    description = "Heavy boots that enchant the user which regenerative properties and extra powerfulness.",
     type = "boots",
 
     shop_cost = { 120, 200 },
@@ -52,7 +52,7 @@ Data.equipment_create {
 
     stat_bonuses = {
         hpregen = 2 / 60,
-        strength = 1,
+        powerfulness = 1,
         defence = 3,
     }
 }

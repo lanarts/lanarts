@@ -4,10 +4,9 @@ MAGE_START_STATS = {
     mp: 120,
     hpregen: 2 / 60, -- Per 60 frames
     mpregen: 4 / 60, -- Per 60 frames 
-    strength: 4,
+    powerfulness: 7,
     defence: 4,
     willpower: 7,
-    magic: 7,
     equipment: {
         gold: 0
         weapon: "Apprentice Staff"
@@ -21,8 +20,7 @@ MAGE_GAIN_STATS = {
     mp: 20,
     hpregen: 0.5 / 60, -- Per 60 frames
     mpregen: 1 / 60, -- Per 60 frames
-    magic: 2,
-    strength: 1,
+    powerfulness: 2,
     defence: 1,
     willpower: 2
 }
@@ -75,10 +73,9 @@ Data.class_create {
 --        mp: 60,
 --        hpregen: 4 / 60, -- Per 60 frames
 --        mpregen: 2 / 60, -- Per 60 frames
---        strength: 7,
+--        powerfulness: 7,
 --        defence: 7,
 --        willpower: 4,
---        magic: 4,
 --        equipment: {
 --          weapon: "Mace",
 --          gold: 0,
@@ -90,10 +87,9 @@ Data.class_create {
 --        mp: 15,
 --        hpregen: 1 / 60, -- Per 60 frames
 --        mpregen: 0.5 / 60, -- Per 60 frames
---        magic: 1,
 --        willpower: 1,
 --        defence: 2,
---        strength: 2
+--        powerfulness: 2
 --    }
 --}
 
@@ -110,10 +106,9 @@ Data.class_create {
         mp: 60,
         hpregen: 4 / 60, -- Per 60 frames
         mpregen: 2 / 60, -- Per 60 frames
-        strength: 7,
+        powerfulness: 7,
         defence: 7,
         willpower: 4,
-        magic: 4,
         equipment: {
           weapon: "Short Sword",
           gold: 0,
@@ -125,10 +120,9 @@ Data.class_create {
         mp: 15,
         hpregen: 1 / 60, -- Per 60 frames
         mpregen: 0.5 / 60, -- Per 60 frames
-        magic: 1,
         willpower: 1,
         defence: 2,
-        strength: 2
+        powerfulness: 2
     }
 }
 
@@ -146,10 +140,9 @@ Data.class_create {
         mp: 60,
         hpregen: 4 / 60, -- Per 60 frames
         mpregen: 2 / 60, -- Per 60 frames
-        strength: 7,
+        powerfulness: 7,
         defence: 7,
         willpower: 4,
-        magic: 4,
         equipment: {
           weapon: "Mace",
           gold: 0,
@@ -161,10 +154,9 @@ Data.class_create {
         mp: 15,
         hpregen: 1 / 60, -- Per 60 frames
         mpregen: 0.5 / 60, -- Per 60 frames
-        magic: 1,
         willpower: 1,
         defence: 2,
-        strength: 2
+        powerfulness: 2
     }
 }
 
@@ -181,10 +173,9 @@ Data.class_create {
         mp: 60,
         hpregen: 6 / 60, -- Per 60 frames
         mpregen: 2 / 60, -- Per 60 frames
-        strength: 7,
+        powerfulness: 7,
         defence: 7,
         willpower: 4,
-        magic: 4,
         equipment: {
           weapon: "Dagger",
           gold: 0,
@@ -196,10 +187,9 @@ Data.class_create {
         mp: 15,
         hpregen: 1.5 / 60, -- Per 60 frames
         mpregen: 0.5 / 60, -- Per 60 frames
-        magic: 1,
         willpower: 1,
         defence: 2,
-        strength: 2
+        powerfulness: 2
     }
 }
 Data.class_create {
@@ -225,10 +215,9 @@ Data.class_create {
         mp: 50,
         hpregen: 3 / 60, -- Per 60 frames
         mpregen: 0 / 60, -- Per 60 frames
-        strength: 0,
+        powerfulness: 7,
         defence: 4,
         willpower: 7,
-        magic: 7,
         equipment: {
           gold: 0,
           inventory: {{item: "Mana Potion", amount: 1}}
@@ -239,9 +228,8 @@ Data.class_create {
         mp: 5,
         hpregen: 1 / 60, -- Per 60 frames
         mpregen: 0 / 60, -- Per 60 frames
-        magic: 2,
         willpower: 1,
         defence: 2,
-        strength: 1
+        powerfulness: 2
     }
 }

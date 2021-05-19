@@ -196,12 +196,12 @@ weapon_create = (args, for_enemy = false) ->
     -- For enemy_create made weapons, directly set base damage:
     if type(args.damage) == 'number'
         damage = args.damage
-        args.damage = {base: {math.floor(damage *0.9), math.ceil(damage * 1.1)}, strength: 0}
+        args.damage = {base: {math.floor(damage *0.9), math.ceil(damage * 1.1)}, powerfulness: 0}
     else
-        args.damage or= {base: {math.floor(damage), math.ceil(damage)}, strength: 0}
+        args.damage or= {base: {math.floor(damage), math.ceil(damage)}, powerfulness: 0}
     if args.types ~= nil
         add_types args, args.types
-    args.power or= {base: {power, power}, strength: 1}
+    args.power or= {base: {power, power}, powerfulness: 1}
     args.range or= 7
     for type in *(args.types or {})
         add_console_draw_func args, (entry, inst, get_next) ->
@@ -233,8 +233,8 @@ spell_create = (args) ->
         proj.range or= 300
         proj.types or= args.types
         proj.damage_type or= {magic: 1.0}
-        proj.damage or= {base: {math.floor(damage), math.ceil(damage)}, strength: 0}
-        proj.power or= {base: {0, 0}, magic: 1}
+        proj.damage or= {base: {math.floor(damage), math.ceil(damage)}, powerfulness: 0}
+        proj.power or= {base: {0, 0}, powerfulness: 1}
         if proj.types ~= nil
             add_types proj, proj.types
         Data.projectile_create(proj)
@@ -262,18 +262,19 @@ spell_create = (args) ->
     yield_point()
 
 projectile_create = (args, for_enemy = false) ->
+    pretty(args)
     if args.cooldown
         damage_multiplier = args.damage_multiplier or 1.0
         damage = damage_multiplier * (args.cooldown / 60 * STANDARD_WEAPON_DPS)
         if for_enemy
             -- For enemies, we want all damage to come from 'damage'.
-            -- The strength and magic stats work differently for enemies thusly.
+            -- The powerfulness and magic stats work differently for enemies thusly.
             args.power or= {base: {0, 0}}
-            args.damage or= {base: {0, 0}, strength: args.damage_type.physical, magic: args.damage_type.magic}
+            args.damage or= {base: {0, 0}, powerfulness: (args.damage_type.physical or 0) + (args.damage_type.magic or 0)}
         else
             --damage = damage_multiplier * (args.cooldown / 60 * args.damage)
-            args.damage or= {base: {math.floor(damage), math.ceil(damage)}, strength: 0}
-            args.power or= {base: {0, 0}, strength: args.damage_type.physical, magic: args.damage_type.magic}
+            args.damage or= {base: {math.floor(damage), math.ceil(damage)}, powerfulness: 0}
+            args.power or= {base: {0, 0}, powerfulness: (args.damage_type.physical or 0) + (args.damage_type.magic or 0)}
     args.spr_item or= "none"
     args.range or= 300
     if args.types ~= nil

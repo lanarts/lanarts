@@ -179,10 +179,8 @@ static int number_of_equip_slots(const Inventory& inv, int type) {
     int max_slots = 1;
     if (type == EquipmentEntry::RING) {
         max_slots += 1;
-        if (have_equipped(inv, "Ring of Ethereal Armour")) {
-            max_slots = 1;
-        } else if (have_equipped(inv, "Amulet of Ringholding")) {
-            max_slots += 1;
+        if (have_equipped(inv, "Amulet of Ringholding")) {
+            max_slots += 2;
         }
     } else if (type == EquipmentEntry::AMULET) {
         if (have_equipped(inv, "Amulet of Greed")) {

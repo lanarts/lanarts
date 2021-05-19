@@ -72,43 +72,46 @@ static void draw_player_base_stats(GameState* gs, PlayerInst* player_inst,
 	gs->font().drawf(ldraw::DrawOptions(COL_WHITE).origin(ldraw::CENTER), Pos(x - 10 + x_interval, 15), "%s",
 			gs->get_level()->label().c_str());
 
-//	y += y_interval;
+    Pos p1(x, y), p2(x + x_interval, y);
+	auto new_row = [&]() {
+        p1.y += y_interval;
+        p2.y += y_interval;
+	};
 
-	Pos p1(x, y), p2(x + x_interval, y);
 	//gs->font().drawf(COL_PALE_RED, Pos(x, y), "Kills %d",
 	//		player_inst->score_stats().kills);
+    gs->font().drawf(COL_WHITE, p1, "%s", gs->get_level()->label().c_str());
 
-	gs->font().drawf(COL_GOLD, Pos(x, y), "Level %d", 
+    gs->font().drawf(COL_GOLD, p2, "Gold %d", player_inst->gold(gs));
+
+    new_row();
+	gs->font().drawf(COL_GOLD, p1, "Level %d",
                 player_inst->class_stats().xplevel);
-	if (gs->game_settings().regen_on_death) {
-        int lives = luawrap::globals(gs->luastate())["package"]["loaded"]["core.GlobalData"]["n_lives"].to_num();
-		gs->font().drawf(COL_PALE_GREEN, Pos(x + x_interval, y), "Lives %d", lives);
-	} else {
-		//gs->font().draw(COL_PALE_BLUE, Pos(x + x_interval, y), "Hardcore");
-		gs->font().drawf(COL_PALE_YELLOW, Pos(x + x_interval, y), "Level %d", class_stats.xplevel);
-	}
+
+    gs->font().drawf(COL_GOLD, p2, "Power %d", core.powerfulness);
 
 	p1.y += y_interval;
 	p2.y += y_interval;
 
-	gs->font().drawf(COL_WHITE, p1, "%s", gs->get_level()->label().c_str());
-	gs->font().drawf(COL_GOLD, p2, "Gold %d", player_inst->gold(gs));
-
-	p1.y += y_interval;
-	p2.y += y_interval;
-
-	gs->font().drawf(COL_PALE_GREEN, p1, "Strength %d", core.strength);
-	gs->font().drawf(COL_PALE_BLUE, p2, "Magic %d", core.magic);
+    gs->font().drawf(COL_PALE_BLUE, p1, "Will %d", core.willpower);
+    gs->font().drawf(COL_PALE_BLUE, p2, "Regen %.1f", core.mpregen * 60.f);
 
 	p1.y += y_interval;
 	p2.y += y_interval;
 
 	gs->font().drawf(COL_PALE_GREEN, p1, "Defence %d", core.defence);
-	gs->font().drawf(COL_PALE_BLUE, p2, "Will %d", core.willpower);
+    gs->font().drawf(COL_PALE_GREEN, p2, "Heal %.1f", core.hpregen * 60.f);
 
 	p1.y += y_interval;
 	p2.y += y_interval;
-
+    if (gs->game_settings().regen_on_death) {
+        int lives = luawrap::globals(gs->luastate())["package"]["loaded"]["core.GlobalData"]["n_lives"].to_num();
+        gs->font().drawf(COL_PALE_GREEN, p1, "Lives %d", lives);
+    } else {
+//        gs->font().draw(COL_PALE_BLUE, p1, "Hardcore");
+    }
+    p1.y += y_interval/2;
+    p2.y += y_interval/2;
 	lcall(luawrap::globals(L)["Engine"]["draw_sidebar_color"], player_inst, p1);
 
 	p1.y += y_interval;

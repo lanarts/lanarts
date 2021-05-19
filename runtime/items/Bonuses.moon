@@ -37,10 +37,9 @@ DEFAULT_STAT_BONUSES = {
     hp: 0
     hpregen: 0
     mpregen: 0
-    strength: 0
+    powerfulness: 0
     defence: 0
     willpower: 0
-    magic: 0
 
     -- Spell-affecting stat bonuses:
     spell_velocity_multiplier: 1.0

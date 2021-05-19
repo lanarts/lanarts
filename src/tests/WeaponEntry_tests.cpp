@@ -27,7 +27,7 @@ extern ResourceDataSet<SpriteEntry> game_sprite_data;
 //				" shop_cost = {1,2}, "
 //				" melee_cooldown_multiplier = 3, "
 //				" damage_bonuses = { damage = {base = {4,5} } }, "
-//				" damage = {strength = 7, magic = 8, base = 9 }, "
+//				" damage = {powerfulness = 7, base = 8 }, "
 //				" on_hit_func = 10, "
 //				" cooldown = 11, "
 //				" range = 12, "
@@ -47,8 +47,7 @@ extern ResourceDataSet<SpriteEntry> game_sprite_data;
 //		CHECK(3 == item.cooldown_modifiers.melee_cooldown_multiplier);
 //		CHECK(Range(4,5) == item.damage_modifier().damage_stats.base);
 //
-//		CHECK(7 == item.attack.damage_modifiers.damage_stats.strength);
-//		CHECK(8 == item.attack.damage_modifiers.damage_stats.magic);
+//		CHECK(7 == item.attack.damage_modifiers.damage_stats.powerfulness);
 //		CHECK(Range(9,9) == item.attack.damage_modifiers.damage_stats.base);
 //		CHECK(10 == item.action_func().to_int());
 //		CHECK(11 == item.attack.cooldown);

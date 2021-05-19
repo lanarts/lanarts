@@ -198,6 +198,25 @@ static void draw_bonus(GameState* gs, DescriptionBoxHelper& dbh,
                bonus > 0 ? valuecol : COL_PALE_RED, optional, true);
 }
 
+static void draw_damage_per_second(
+    GameState* gs, 
+    DescriptionBoxHelper& dbh,
+    float cooldown,
+    CoreStatMultiplier& damage, 
+    CoreStatMultiplier& power, 
+    CoreStats& core,
+    Colour prefixcol = COL_GREEN, 
+    Colour valuecol = COL_PALE_GREEN
+) {
+    Range damage_range = damage.calculate_range(core);
+    Range power_range = power.calculate_range(core);
+    float hits_per_second = 60.0f / cooldown;
+    float power_bonus = 1 + 0.05f * (power_range.min + power_range.max) / 2.0f;
+    float raw_damage_per_second = (damage_range.min + damage_range.max) * hits_per_second / 2.0f;
+    dbh.draw_prefix(gs, prefixcol, "Hit/second: ");
+    dbh.draw_value(gs, valuecol, "%.1f", raw_damage_per_second * power_bonus);
+}
+
 static void draw_statmult(GameState* gs, DescriptionBoxHelper& dbh,
                           const char* name, CoreStatMultiplier& mult, CoreStats& core,
                           Colour prefixcol = COL_GREEN, Colour valuecol = COL_PALE_GREEN,
@@ -233,9 +252,8 @@ static void draw_percentage_modifier(GameState* gs, DescriptionBoxHelper& dbh,
 
 static void draw_stat_bonuses_overlay(GameState* gs, DescriptionBoxHelper& dbh,
                                       CoreStats& core) {
-    draw_bonus(gs, dbh, "Strength: ", core.strength);
+    draw_bonus(gs, dbh, "Power: ", core.powerfulness);
     draw_bonus(gs, dbh, "Defence: ", core.defence);
-    draw_bonus(gs, dbh, "Magic: ", core.magic);
     draw_bonus(gs, dbh, "Will: ", core.willpower);
     draw_bonus(gs, dbh, "HP: ", core.max_hp);
     draw_bonus(gs, dbh, "MP: ", core.max_mp);
@@ -244,14 +262,14 @@ static void draw_stat_bonuses_overlay(GameState* gs, DescriptionBoxHelper& dbh,
         dbh.draw_value(gs, COL_PALE_GREEN, "%.2f", core.hpregen * 60.f);
     } else if (core.hpregen < 0) {
         dbh.draw_prefix(gs, COL_RED, "-HP/second: ");
-        dbh.draw_value(gs, COL_RED, "%.2f", -core.hpregen * 60.f);
+        dbh.draw_value(gs, COL_RED, "%.1f", -core.hpregen * 60.f);
     }
     if (core.mpregen > 0) {
         dbh.draw_prefix(gs, COL_PALE_BLUE, "+MP/second: ");
-        dbh.draw_value(gs, COL_PALE_GREEN, "%.2f", core.mpregen * 60.f);
+        dbh.draw_value(gs, COL_PALE_GREEN, "%.1f", core.mpregen * 60.f);
     } else if (core.mpregen < 0) {
         dbh.draw_prefix(gs, COL_RED, "-MP/second: ");
-        dbh.draw_value(gs, COL_RED, "%.2f", -core.mpregen * 60.f);
+        dbh.draw_value(gs, COL_RED, "%.1f", -core.mpregen * 60.f);
     }
     draw_percentage_modifier(gs, dbh, core.spell_velocity_multiplier,
                              "Spell Velocity: ");
@@ -331,12 +349,30 @@ static void draw_equipment_description_overlay(GameState* gs,
     call_console_draw_func(entry.console_draw_func, entry.raw, gs->local_player(), dbh);
 }
 
-static void draw_attack_description_overlay(GameState* gs,
-                                            DescriptionBoxHelper& dbh, CoreStats& core, Attack& attack) {
-    draw_statmult(gs, dbh, "Damage: ", attack.damage_stats(), core,
-                  COL_PALE_YELLOW, COL_PALE_GREEN, false);
-    draw_statmult(gs, dbh, "Power: ", attack.power_stats(), core,
-                  COL_PALE_YELLOW, COL_PALE_GREEN, false);
+static void draw_attack_description_overlay(
+    GameState* gs,
+    DescriptionBoxHelper& dbh, 
+    CoreStats& core, 
+    CooldownModifiers& modifiers,
+    Attack& attack
+) {
+    // TODO other cooldown multipliers
+    
+    float cooldown = 
+        attack.cooldown * modifiers.melee_cooldown_multiplier * (1.0f - attack.magic_percentage()) +
+        attack.cooldown * modifiers.spell_cooldown_multiplier * attack.magic_percentage();
+    draw_damage_per_second(
+        gs, 
+        dbh, 
+        cooldown, 
+        attack.damage_stats(), 
+        attack.power_stats(), 
+        core,
+        COL_PALE_YELLOW, 
+        COL_PALE_GREEN
+    );
+    // draw_statmult(gs, dbh, "Power: ", attack.power_stats(), core,
+    //               COL_PALE_YELLOW, COL_PALE_GREEN, false);
 
     if (attack.range >= 15) {
         dbh.draw_prefix(gs, COL_PALE_YELLOW, "Range: ");
@@ -347,8 +383,7 @@ static void draw_attack_description_overlay(GameState* gs,
                        range_description(attack.range));
 //                }
     }
-    int cooldown = attack.cooldown;
-    draw_value(gs, dbh, "Cooldown: ", cooldown, COL_PALE_YELLOW,
+    draw_value(gs, dbh, "Cooldown: ", int(cooldown), COL_PALE_YELLOW,
                COL_PALE_RED);
 }
 
@@ -359,11 +394,12 @@ static void draw_weapon_description_overlay(GameState* gs,
     WeaponEntry& entry = weapon.weapon_entry();
     PlayerInst* p = gs->local_player();
     CoreStats& core = p->effective_stats().core;
+    CooldownModifiers& modifiers = p->effective_stats().cooldown_modifiers;
 
     if (entry.attack.alt_spell != -1) {
         draw_console_spell_stats(gs, dbh, entry.attack.alt_spell_entry());
     } else {
-        draw_attack_description_overlay(gs, dbh, core, entry.attack);
+        draw_attack_description_overlay(gs, dbh, core, modifiers, entry.attack);
     }
     draw_equipment_description_overlay(gs, dbh, weapon);
 }
@@ -374,7 +410,8 @@ static void draw_projectile_description_overlay(GameState* gs,
     if (entry.is_standalone()) {
         PlayerInst* p = gs->local_player();
         CoreStats& core = p->effective_stats().core;
-        draw_attack_description_overlay(gs, dbh, core, entry.attack);
+        CooldownModifiers& modifiers = p->effective_stats().cooldown_modifiers;
+        draw_attack_description_overlay(gs, dbh, core, modifiers, entry.attack);
     }
     draw_equipment_description_overlay(gs, dbh, projectile);
 }
@@ -425,17 +462,17 @@ void draw_console_enemy_description(GameState* gs, EnemyEntry& entry) {
         return dbh.get_next_draw_position();
     });
     draw_value(gs, dbh, "HP: ", ecore.hp, COL_PALE_YELLOW, COL_PALE_RED);
-    draw_value(gs, dbh, "Strength: ", ecore.strength, COL_PALE_YELLOW,
+    draw_value(gs, dbh, "Power: ", ecore.powerfulness, COL_PALE_YELLOW,
                COL_PALE_RED);
-    draw_value(gs, dbh, "Magic: ", ecore.magic, COL_PALE_YELLOW, COL_PALE_RED);
     draw_value(gs, dbh, "Defence: ", ecore.defence, COL_PALE_YELLOW,
                COL_PALE_RED);
     draw_value(gs, dbh, "Will: ", ecore.willpower, COL_PALE_YELLOW,
                COL_PALE_RED);
 
     auto core = entry.basestats.effective_stats(gs, NULL).core;
+    auto modifiers = entry.basestats.effective_stats(gs, NULL).cooldown_modifiers;
     WeaponEntry& weap = entry.basestats.attacks[0].weapon.weapon_entry();
-    draw_attack_description_overlay(gs, dbh, core, weap.attack);
+    draw_attack_description_overlay(gs, dbh, core, modifiers, weap.attack);
 }
 
 void draw_console_item_description(GameState* gs, const Item& item,

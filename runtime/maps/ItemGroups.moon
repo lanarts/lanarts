@@ -19,7 +19,6 @@ rings = (chance, args) -> _filter{
     args.ignore_medium or{  item: "Gallanthor's Ring",  chance: 4                      }
     args.ignore_strong or{  item: "Ring of Ethereal Armour",  chance: 1                      }
     args.ignore_strong or{  item: "Ring of Vampirism",  chance: 1                      }
-    args.ignore_strong or{  item: "Abolishment Ring",  chance: 1                      }
     args.ignore_strong or{  item: "Wizard's Ring",  chance: 4                      }
     { item: "Ring of Spells",     chance: 8                      }
     { item: "Ring of Vitality",   chance: 8                      }
@@ -69,8 +68,7 @@ consumables = (chance, args) -> _filter {
     -- Permanent enchantments
     args.ignore_strong or { 
         chance: 5
-        { item: "Strength Scroll",    chance: 1                      }
-        { item: "Magic Scroll",       chance: 1                      }
+        { item: "Power Scroll",       chance: 1                      }
         { item: "Defence Scroll",     chance: 1                      }
         { item: "Will Scroll",        chance: 1                      }
         -- Make the above very, very rare in comparison:
@@ -209,7 +207,7 @@ weapons = (chance, args) -> _filter {
             { item: "Mace",                          chance: 1           }
         }
         args.ignore_strong or {
-            chance: 500
+            chance: 100
             --{ item: "Iron Broadsword",                          chance: 4           }
             { item: "Gallanthor's Crutch",                 chance: 2     }
             --{ item: "Serated Sword",      chance: 4                      }

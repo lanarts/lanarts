@@ -50,9 +50,8 @@ static void parse_gain_per_level(ClassEntry& entry,
 	entry.hp_perlevel = defaulted(value, "hp", 0);
 	entry.mp_perlevel = defaulted(value, "mp", 0);
 
-	entry.str_perlevel = defaulted(value, "strength", 0);
+	entry.str_perlevel = defaulted(value, "powerfulness", 0);
 	entry.def_perlevel = defaulted(value, "defence", 0);
-	entry.mag_perlevel = defaulted(value, "magic", 0);
 	entry.will_perlevel = defaulted(value, "willpower", 0);
 
 	entry.mpregen_perlevel = defaulted(value, "mpregen", 0.0f);

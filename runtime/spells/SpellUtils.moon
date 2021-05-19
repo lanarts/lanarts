@@ -8,9 +8,10 @@ LuaGameObject = require "objects.LuaGameObject"
 ObjectUtils = require "objects.ObjectUtils"
 TypeEffectUtils = require "spells.TypeEffectUtils"
 
+-- TODO cleanup post magic/strength squish
 do_damage = (caster, types, target, damage, power = 0, magic_percentage = 1) ->
     stats = caster\effective_stats()
-    power += magic_percentage * stats.magic + (1 - magic_percentage) * stats.strength
+    power += stats.powerfulness
     for type in *types
         power += TypeEffectUtils.get_power(caster, type)
         damage *= TypeEffectUtils.get_resistance(target, type)

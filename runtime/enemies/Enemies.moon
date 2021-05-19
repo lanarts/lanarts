@@ -34,9 +34,8 @@ DataW.enemy_create {
         hpregen: 0.03
         movespeed: 2
         -- base stats:
-        strength: 3
+        powerfulness: 5
         defence: 8
-        magic: 5
         willpower: 8
     }
     effects_active: {{"Pain Aura", {damage: 15, range: 90}}}
@@ -58,9 +57,8 @@ DataW.enemy_create {
         hpregen: 0.03
         movespeed: 1
         -- base stats:
-        magic: 45
         defence: 25
-        strength: 45
+        powerfulness: 45
         willpower: 25
     }
     effects_active: {"Sap Aura"}
@@ -84,9 +82,8 @@ DataW.enemy_create {
         hpregen: 0.03
         movespeed: 1
         -- base stats:
-        strength: 15
+        powerfulness: 25
         defence: 5
-        magic: 25
         willpower: 5
     }
     effects_active: {
@@ -110,9 +107,8 @@ DataW.enemy_create {
         hpregen: 0
         movespeed: 4
         -- base stats:
-        strength: 5
+        powerfulness: 10
         defence: 8
-        magic: 10
         willpower: 8
     }
 }
@@ -133,9 +129,8 @@ DataW.enemy_create {
         hpregen: 0
         movespeed: 4
         -- base stats:
-        strength: 5
+        powerfulness: 10
         defence: 8
-        magic: 10
         willpower: 8
     }
 }
@@ -157,9 +152,8 @@ DataW.enemy_create {
         hpregen: 0
         movespeed: 5
         -- base stats:
-        strength: 15
+        powerfulness: 15
         defence: 0
-        magic: 15
         willpower: 0
    }
    effects_active: {
@@ -212,9 +206,8 @@ DataW.enemy_create summoner_base("Mummy", 5) {
         hpregen: 0.03
         movespeed: 1
         -- base stats:
-        strength: 15
+        powerfulness: 15
         defence: 8
-        magic: 10
         willpower: 8
     }
 }
@@ -235,7 +228,7 @@ DataW.enemy_create {
         hp: 60
         hpregen: 0.1
         movespeed: 3
-        strength: 20
+        powerfulness: 20
         defence: 0
         willpower: 0
     }
@@ -259,7 +252,7 @@ DataW.enemy_create {
         hp: 20
         hpregen: 0.1
         movespeed: 3
-        strength: 25
+        powerfulness: 25
         defence: 0
         willpower: 0
     }
@@ -283,7 +276,7 @@ DataW.enemy_create {
         hp: 40
         hpregen: 0.1
         movespeed: 3
-        strength: 25
+        powerfulness: 25
         defence: 0
         willpower: 0
     }
@@ -308,14 +301,15 @@ DataW.enemy_create summoner_base("Imp", 1, 100, 100) {
         hp: 200
         hpregen: 0.125
         movespeed: 5
-        strength: 25
-        magic: 10
+        -- ~30DPS to a defence 7
+        -- Kills 150hp in 5 seconds!
+        powerfulness: 40
         defence: 8
         willpower: 8
     }
     on_post_draw: draw_boss_name
     death_func: () =>
-        item = random_choice {"Will Scroll", "Strength Scroll", "Defence Scroll", "Magic Scroll"}
+        item = random_choice {"Will Scroll", "Power Scroll", "Defence Scroll"}
         ObjectUtils.spawn_item_near(@, item, 1)
         ObjectUtils.spawn_item_near(@, "Swarm Lanart", 1)
         ItemUtils = require "maps.ItemUtils"
@@ -337,7 +331,7 @@ DataW.enemy_create summoner_base("Imp", 1, 100, 100) {
 --        hp: 200
 --        hpregen: 0.2
 --        movespeed: 5
---        strength: 25
+--        powerfulness: 25
 --        defence: 15
 --        willpower: 20
 --    }
@@ -374,9 +368,8 @@ DataW.enemy_create {
         hpregen: 0.03
         movespeed: 1
         -- base stats:
-        strength: 25
+        powerfulness: 25
         defence: 0
-        magic: 25
         willpower: 0
     }
     weapon: {
@@ -404,7 +397,7 @@ DataW.enemy_create {
         hp: 40
         hpregen: 0.04
         movespeed: 3.5
-        strength: 3
+        powerfulness: 3
         defence: 0
         willpower: 0
     }
@@ -429,9 +422,8 @@ DataW.enemy_create {
         hpregen: 0.03
         movespeed: 3
         -- base stats:
-        strength: 0
+        powerfulness: 25
         defence: 0
-        magic: 25
         willpower: 0
     }
     effects_active: {"StopOnceInRange", "Enraging"}
@@ -451,7 +443,7 @@ DataW.enemy_create {
         hp: 70
         hpregen: 0.05
         movespeed: 2
-        strength: 20
+        powerfulness: 20
         defence: 8
         willpower: 8
     }
@@ -472,7 +464,7 @@ DataW.enemy_create {
         hp: 20
         hpregen: 0.05
         movespeed: 2
-        strength: 20
+        powerfulness: 20
         defence: 8
         willpower: 8
     }
@@ -492,8 +484,7 @@ DataW.enemy_create summoner_base("Fire Bat", 5, 100, 100) {
         hp: 220
         hpregen: 0.1
         movespeed: 2.5
-        strength: 20
-        magic: 20
+        powerfulness: 20
         defence: 15
         willpower: 15
     }
@@ -535,7 +526,7 @@ DataW.enemy_create summoner_base("Fire Bat", 5, 100, 100) {
         for i=1,1 -- #World.players * 2
             {:type, :amount} = ItemUtils.randart_generate(1)
             ObjectUtils.spawn_item_near(@, type, amount)
-        item = random_choice {"Will Scroll", "Strength Scroll", "Defence Scroll", "Magic Scroll"}
+        item = random_choice {"Will Scroll", "Power Scroll", "Defence Scroll"}
         ObjectUtils.spawn_item_near(@, item, 1)
 }
 
@@ -552,8 +543,7 @@ DataW.enemy_create {
         hp: 220
         hpregen: 0.1
         movespeed: 2.5
-        strength: 35
-        magic: 30
+        powerfulness: 35
         defence: 15
         willpower: 15
     }
@@ -593,14 +583,13 @@ DataW.enemy_create summoner_base("Imp", 1, 100, 100) {
         hp: 200
         hpregen: 0.125
         movespeed: 5
-        strength: 25
-        magic: 10
+        powerfulness: 25
         defence: 12
         willpower: 8
     }
     on_post_draw: draw_boss_name
     death_func: () =>
-        item = random_choice {"Will Scroll", "Strength Scroll", "Defence Scroll", "Magic Scroll"}
+        item = random_choice {"Will Scroll", "Power Scroll", "Defence Scroll"}
         ObjectUtils.spawn_item_near(@, item, 1)
         ObjectUtils.spawn_item_near(@, "War Lanart", 1)
         ItemUtils = require "maps.ItemUtils"
@@ -623,8 +612,7 @@ DataW.enemy_create {
         hp: 150
         hpregen: 0.25
         movespeed: 3.5
-        strength: 40
-        magic: 10
+        powerfulness: 40
         defence: 8
         willpower: 8
     }
@@ -655,8 +643,7 @@ DataW.enemy_create {
         hp: 200
         hpregen: 0.25
         movespeed: 3
-        strength: 25
-        magic: 10
+        powerfulness: 25
         defence: 8
         willpower: 8
     }
@@ -685,8 +672,7 @@ DataW.enemy_create summoner_base({"Mouther", "Mana Sapper", "Crypt Keeper"}, 3, 
         movespeed: 3.5
         hp: 500
         hpregen: 0.15
-        strength: 25
-        magic: 30
+        powerfulness: 25
         defence: 20
         willpower: 20
     }
@@ -713,7 +699,7 @@ DataW.enemy_create {
         hp: 60
         hpregen: 0.01
         movespeed: 4
-        strength: 20
+        powerfulness: 20
         defence: 8
         willpower: 8
     }
@@ -742,7 +728,7 @@ DataW.enemy_create {
         hp: 100
         hpregen: 0.02
         movespeed: 4
-        strength: 30
+        powerfulness: 30
         defence: 16
         willpower: 16
     }
@@ -763,7 +749,7 @@ DataW.enemy_create {
                     poison_rate: 25
                     attacker: @caster
                     damage: 30
-                    power: @caster\effective_stats().strength
+                    power: @caster\effective_stats().powerfulness
                     magic_percentage: 0
                 }
     }
@@ -782,7 +768,7 @@ DataW.enemy_create {
         hp: 200
         hpregen: 0.02
         movespeed: 4
-        strength: 60
+        powerfulness: 60
         defence: 16
         willpower: 16
     }
@@ -802,7 +788,7 @@ DataW.enemy_create {
                     poison_rate: 25
                     attacker: @caster
                     damage: 30
-                    power: @caster\effective_stats().strength
+                    power: @caster\effective_stats().powerfulness
                     magic_percentage: 0
                 }
     }
@@ -819,8 +805,7 @@ DataW.enemy_create {
        movespeed: 3.5
        hp: 125
        hpregen: 0.01
-       strength: 45
-       magic: 45
+       powerfulness: 45
        defence: 25
        willpower: 25
    }
@@ -849,8 +834,7 @@ DataW.enemy_create {
         movespeed: 2
         hp: 25
         hpregen: 0.02
-        strength: 5
-        magic: 25
+        powerfulness: 25
         defence: 4
         willpower: 5
     }
@@ -876,8 +860,7 @@ DataW.enemy_create {
         movespeed: 1
         hp: 50
         hpregen: 0.05
-        strength: 5
-        magic: 25
+        powerfulness: 25
         defence: 6
         willpower: 8
     }
@@ -903,8 +886,7 @@ DataW.enemy_create {
         movespeed: 2
         hp: 75
         hpregen: 0.05
-        strength: 5
-        magic: 45
+        powerfulness: 45
         defence: 8
         willpower: 10
     }
@@ -937,7 +919,7 @@ DataW.enemy_create {
         hpregen: 0.03
         movespeed: 2
         --base stats: {
-        strength: 10
+        powerfulness: 10
         defence: 5
         willpower: 5
     }
@@ -955,8 +937,7 @@ DataW.enemy_create {
         hp: 15
         hpregen: 0.03
         movespeed: 3
-        strength: 12
-        magic: 12
+        powerfulness: 12
         defence: 5
         willpower: 5
     }
@@ -995,7 +976,7 @@ DataW.enemy_create {
         hp: 18
         hpregen: 0.03
         movespeed: 3
-        strength: 10
+        powerfulness: 10
         defence: 5
         willpower: 5
     }
@@ -1015,7 +996,7 @@ DataW.enemy_create {
         hp: 65
         hpregen: 0.04
         movespeed: 4.5
-        strength: 25
+        powerfulness: 25
         defence: 12
         willpower: 10
     }
@@ -1035,7 +1016,7 @@ DataW.enemy_create {
         hp: 15
         hpregen: 0.04
         movespeed: 4
-        strength: 12
+        powerfulness: 12
         defence: 4
         willpower: 10
     }
@@ -1055,7 +1036,7 @@ DataW.enemy_create {
         hp: 25
         hpregen: 0.03
         movespeed: 2.5
-        strength: 12
+        powerfulness: 12
         defence: 5
         willpower: 5
     }
@@ -1075,7 +1056,7 @@ DataW.enemy_create {
         hp: 120
         hpregen: 0.05
         movespeed: 3.0
-        strength: 30
+        powerfulness: 30
         defence: 20
         willpower: 15
     }
@@ -1100,7 +1081,7 @@ DataW.enemy_create {
         hp: 25
         hpregen: 0.01
         movespeed: 3
-        strength: 12
+        powerfulness: 12
         defence: 5
         willpower: 5
     }
@@ -1120,7 +1101,7 @@ DataW.enemy_create {
         hp: 20
         hpregen: 0.04
         movespeed: 4
-        strength: 3
+        powerfulness: 3
         defence: 0
         willpower: 0
     }
@@ -1140,7 +1121,7 @@ DataW.enemy_create {
         hp: 25
         hpregen: 0.04
         movespeed: 3
-        strength: 3
+        powerfulness: 3
         defence: 7
         willpower: 7
     }
@@ -1160,7 +1141,7 @@ DataW.enemy_create {
         hp: 35
         hpregen: 0.02
         movespeed: 5
-        strength: 25
+        powerfulness: 25
         defence: 15
         willpower: 15
     }
@@ -1180,7 +1161,7 @@ DataW.enemy_create {
         hp: 40
         hpregen: 0.08
         movespeed: 4
-        strength: 25
+        powerfulness: 25
         defence: 10
         willpower: 10
     }
@@ -1200,7 +1181,7 @@ DataW.enemy_create {
         hp: 80
         hpregen: 0.08
         movespeed: 4
-        strength: 45
+        powerfulness: 45
         defence: 10
         willpower: 10
     }
@@ -1229,7 +1210,7 @@ DataW.enemy_create {
         hp: 100
         hpregen: 0.1
         movespeed: 3
-        strength: 35
+        powerfulness: 35
         defence: 10
         willpower: 10
     }
@@ -1278,7 +1259,7 @@ DataW.enemy_create {
         hp: 100
         hpregen: 0.1
         movespeed: 3
-        strength: 35
+        powerfulness: 35
         defence: 10
         willpower: 20
     }
@@ -1345,7 +1326,7 @@ DataW.enemy_create {
         hp: 100
         hpregen: 0.1
         movespeed: 3
-        strength: 35
+        powerfulness: 35
         defence: 10
         willpower: 10
     }
@@ -1400,8 +1381,7 @@ DataW.enemy_create {
         hp: 5
         hpregen: 0
         movespeed: 2
-        strength: 7
-        magic: 2
+        powerfulness: 7
         defence: 0
         willpower: 2
     }
@@ -1420,8 +1400,7 @@ DataW.enemy_create {
         hp: 50
         hpregen: 0
         movespeed: 2
-        strength: 2
-        magic: 2
+        powerfulness: 2
         defence: 0
         willpower: 2
     }
@@ -1440,8 +1419,7 @@ DataW.enemy_create {
         hp: 75
         hpregen: 0.05
         movespeed: 2
-        strength: 5
-        magic: 5
+        powerfulness: 5
         defence: 5
         willpower: 5
     }
@@ -1461,8 +1439,7 @@ DataW.enemy_create {
         hp: 40
         hpregen: 0.05
         movespeed: 2
-        strength: 10
-        magic: 10
+        powerfulness: 10
         defence: 8
         willpower: 8
     }
@@ -1483,8 +1460,7 @@ DataW.enemy_create {
         hp: 35
         hpregen: 0.25
         movespeed: 2
-        strength: 12
-        magic: 0
+        powerfulness: 12
         defence: 10
         willpower: 10
     }
@@ -1504,8 +1480,7 @@ DataW.enemy_create {
 --        movespeed: 4.0
 --        hp: 50
 --        hpregen: 0.25
---        strength: 20
---        magic: 20
+--        powerfulness: 20
 --        defence: 10
 --        willpower: 10
 
@@ -1528,7 +1503,7 @@ DataW.enemy_create {
         hp: 130
         hpregen: 0
         movespeed: 3
-        strength: 25
+        powerfulness: 25
         defence: 0
         willpower: 80
     }
@@ -1549,8 +1524,7 @@ DataW.enemy_create {
         movespeed: 3.3
         hp: 20
         hpregen: 0.25
-        strength: 8
-        magic: 8
+        powerfulness: 8
         defence: 10
         willpower: 10
     }
@@ -1572,8 +1546,7 @@ DataW.enemy_create {
         movespeed: 4.0
         hp: 70
         hpregen: 0.25
-        strength: 12
-        magic: 12
+        powerfulness: 12
         defence: 10
         willpower: 10
     }
@@ -1603,8 +1576,7 @@ DataW.enemy_create {
         hp: 80
         hpregen: 0.1
         movespeed: 2.5
-        strength: 8
-        magic: 25
+        powerfulness: 25
         defence: 5
         willpower: 10
     }
@@ -1636,7 +1608,7 @@ DataW.enemy_create {
         hp: 80
         hpregen: 0.02
         movespeed: 3.4
-        strength: 20
+        powerfulness: 20
         defence: 8
         willpower: 6
     }
@@ -1664,8 +1636,7 @@ DataW.enemy_create {
         movespeed: 3
         hp: 65
         hpregen: 0.05
-        strength: 20
-        magic: 25
+        powerfulness: 25
         defence: 10
         willpower: 15
     }
@@ -1694,7 +1665,7 @@ DataW.enemy_create {
         hp: 80
         hpregen: 0.02
         movespeed: 2
-        strength: 45
+        powerfulness: 45
         defence: 20
         willpower: 20
 
@@ -1712,7 +1683,7 @@ DataW.enemy_create {
         hp: 100
         hpregen: 0.06
         movespeed: 5
-        strength: 30
+        powerfulness: 30
         defence: 25
         willpower: 25
     }
@@ -1730,7 +1701,7 @@ DataW.enemy_create {
         hp: 200
         hpregen: 0
         movespeed: 1
-        strength: 24
+        powerfulness: 24
         defence: 10
         willpower: 10
     }
@@ -1761,7 +1732,7 @@ DataW.enemy_create {
       hp: 20
       hpregen: 0.05
       movespeed: 1
-      strength: 15
+      powerfulness: 15
       defence: 0
       willpower: 0
     }
@@ -1782,7 +1753,7 @@ DataW.enemy_create {
       hp: 25
       hpregen: 0.1
       movespeed: 1
-      strength: 6
+      powerfulness: 6
       defence: 4
       willpower: 6
     }
@@ -1804,7 +1775,7 @@ DataW.enemy_create {
       hp: 25
       hpregen: 0.1
       movespeed: 1
-      strength: 6
+      powerfulness: 6
       defence: 4
       willpower: 6
     }

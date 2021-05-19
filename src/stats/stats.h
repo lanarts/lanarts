@@ -31,7 +31,7 @@ struct CoreStats {
 	int mp = 0, max_mp = 0;
 	float hp_bleed = 0; // Amount of 'locked out' HP that can't be regenerated.
 	float mp_bleed = 0; // Amount of 'locked out' MP that can't be regenerated.
-	int strength = 0, defence = 0, magic = 0, willpower = 0;
+	int powerfulness = 0, defence = 0, willpower = 0;
 	float hpregen = 0, mpregen = 0;
 	// Values < 0
 	float hp_regened = 0, mp_regened = 0;
@@ -51,15 +51,14 @@ CoreStats parse_core_stats(const LuaField& value, bool required = false);
 /* Stat multiplier, weighted sum*/
 struct CoreStatMultiplier {
 	Range base;
-	float strength, defence, magic, willpower;
-	CoreStatMultiplier(int base = 0, float strength = 0, float defence = 0,
+	float powerfulness, defence, willpower;
+    explicit CoreStatMultiplier(int base = 0, float powerfulness = 0, float defence = 0,
 			float magic = 0, float willpower = 0) :
-			base(base, base), strength(strength), defence(defence), magic(
-					magic), willpower(willpower) {
+			base(base, base), powerfulness(powerfulness), defence(defence), willpower(willpower) {
 	}
 	bool is_empty() {
-		return base.min == 0 && base.max == 0 && strength == 0 && defence == 0
-				&& magic == 0 && willpower == 0;
+		return base.min == 0 && base.max == 0 && powerfulness == 0 && defence == 0
+				&& willpower == 0;
 	}
 	Range calculate_range(const CoreStats& stats) const;
 	float calculate(MTwist& mt, const CoreStats& stats) const;

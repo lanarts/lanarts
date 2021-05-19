@@ -56,7 +56,7 @@ Data.equipment_create {
     spr_item = "spr_amulets.fear_strike",
     --spells_granted = {"Fear Strike"},
     effects_granted = {"FearWeapon"},
-    stat_bonuses = {strength = 1}
+    stat_bonuses = {powerfulness = 1}
 }
 
 Data.equipment_create {
@@ -194,7 +194,7 @@ Data.equipment_create {
 
 Data.equipment_create {
     name = "Amulet of Ringholding",
-    description = "Grants user the ability to wear an additional ring.",
+    description = "Grants user the ability to wear an additional two rings.",
     type = "amulet",
 
     shop_cost = { 120, 140 },
@@ -204,7 +204,7 @@ Data.equipment_create {
 
 Data.item_create {
     name = "Snake Lanart",
-    description = "Helps open Pixullochia. When equipped, summons a snake on every kill.",
+    description = "Helps open Pixullochia.",
     type = "key",
     entry_type = "Lanart",
 
@@ -227,7 +227,7 @@ Data.item_create {
 
 Data.item_create {
     name = "Tomb Lanart",
-    description = "Helps open Pixullochia. When equipped, grants +3 Black Power.",
+    description = "Helps open Pixullochia.",
     type = "key",
     entry_type = "Lanart",
 
@@ -252,7 +252,7 @@ Data.item_create {
 
 Data.item_create {
     name = "War Lanart",
-    description = "Helps open Pixullochia. When equipped, grants +2 strength.",
+    description = "Helps open Pixullochia.",
     type = "key",
     entry_type = "Lanart",
 
@@ -264,7 +264,7 @@ Data.item_create {
     end,
     sellable = false,
     stackable = false,
-    stat_bonuses = {strength = 2},
+    stat_bonuses = {powerfulness = 2},
     pickup_func = function(self, user)
         local GlobalData = require "core.GlobalData"
         if not GlobalData.lanarts_picked_up[self.name] then
@@ -276,7 +276,7 @@ Data.item_create {
 
 Data.item_create {
     name = "Swarm Lanart",
-    description = "Helps open Pixullochia. When equipped, grants +5 Green Power.",
+    description = "Helps open Pixullochia.",
     type = "key",
     entry_type = "Lanart",
 
@@ -300,7 +300,7 @@ Data.item_create {
 
 Data.item_create {
     name = "Dragon Lanart",
-    description = "Helps open Pixullochia. When equipped, grants +5 Red Resistance.",
+    description = "Helps open Pixullochia.",
     type = "key",
     entry_type = "Lanart",
 
@@ -324,7 +324,7 @@ Data.item_create {
 
 Data.item_create {
     name = "Rage Lanart",
-    description = "Helps open Pixullochia. When equipped, grants +1 willpower, and +8% melee rate.",
+    description = "Helps open Pixullochia.",
     type = "key",
     entry_type = "Lanart",
 
@@ -349,7 +349,7 @@ Data.item_create {
 
 Data.item_create {
     name = "Obliteration Lanart",
-    description = "Helps open Pixullochia. When equipped, grants +50 spell velocity, and +5% casting rate.",
+    description = "Helps open Pixullochia.",
     type = "key",
     entry_type = "Lanart",
 

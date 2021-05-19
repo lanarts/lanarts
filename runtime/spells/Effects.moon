@@ -56,8 +56,8 @@ DataW.effect_create {
             defender\add_effect("Stun", 20 + attacker.stats.level)
         return damage
     stat_func: (obj, old, new) =>
-        -- 2 Strength points during berserk for each levelup
-        new.strength += obj.stats.level * 2
+        -- 2 Power points during berserk for each levelup
+        new.powerfulness += obj.stats.level * 2
         -- Greater defences during berserk
         -- 3 defence points during berserk for each levelup
         new.defence = math.max(0, new.defence + obj.stats.level * 3)
@@ -145,7 +145,7 @@ DataW.effect_create {
     can_use_spells: false
     stat_func: (obj, old, new) =>
         new.defence += 5
-        new.strength += 5
+        new.powerfulness += 5
         new.speed = 0
     remove_func: (obj) =>
         @callback(obj)
@@ -159,8 +159,7 @@ DataW.effect_create {
     effected_colour: {160,160,255,240}
     stat_func: (obj, old, new) =>
         new.speed += 2
-        new.strength += 2
-        new.magic += 2
+        new.powerfulness += 2
         new.defence += 4
         new.willpower += 4
         new.cooldown_mult /= 1.25
@@ -405,7 +404,7 @@ DataW.additive_effect_create {
                 poison_rate: 25
                 :attacker
                 damage:  damage * (1 + power/5)
-                power: attacker\effective_stats().magic + power
+                power: attacker\effective_stats().powerfulness + power
                 type_resistance: resist
                 magic_percentage: 1.0
             }
@@ -860,7 +859,7 @@ DataW.effect_create {
                 play_pained_sound()
                 caster\add_effect("Pained", 50)
                 stats = caster\effective_stats()
-                damage, power = @damage, random(2,5) + stats.magic
+                damage, power = @damage, random(2,5) + stats.powerfulness
                 power = power + TypeEffectUtils.get_power(caster, "Black")
                 type_multiplier = TypeEffectUtils.get_resistance(mon, "Black")
                 if mon\damage(damage, power, 1, caster, type_multiplier) then
@@ -902,12 +901,13 @@ DataW.effect_create {
 }
 
 
-DataW.effect_create {
-    name: "Abolishment"
-    stat_func: (effect, obj, old, new) ->
-        new.strength += math.ceil(new.magic / 3)
-        new.magic = 0
-}
+-- TODO new effect
+-- DataW.effect_create {
+--     name: "Abolishment"
+--     stat_func: (effect, obj, old, new) ->
+--         new.powerfulness += math.ceil(new.powerfulness / 3)
+--         new.powerfulness = 0
+-- }
 
 DataW.effect_create {
     name: "KnockbackWeapon"
@@ -947,8 +947,11 @@ for name in *{"Ranger", "Fighter", "Templar", "Rogue", "Green Mage", "Black Mage
     DataW.effect_create {
         :name
         stat_func: (obj, old, new) =>
-            if name ~= "Fighter"
-                new.melee_cooldown_multiplier *= 1.25
+            if name == "Fighter"
+                new.spell_cooldown_multiplier *= 2
+            else
+                new.melee_cooldown_multiplier *= 2
+            
         init_func: (caster) =>
             @kill_tracker = caster.kills
             @links = {}
@@ -962,11 +965,6 @@ for name in *{"Ranger", "Fighter", "Templar", "Rogue", "Green Mage", "Black Mage
                 eff = caster\add_effect "Summoner", 2
                 eff.duration = 30
             while caster.kills > @kill_tracker
-                --if name == "Necromancer"
-                --    for _ in screens()
-                --        if caster\is_local_player()
-                --            EventLog.add("You gain mana for killing!", COL_PALE_BLUE)
-                --    caster\heal_mp(5)
                 for {:instance, :class_name} in *World.players
                     if class_name == "Necromancer"
                         for _ in screens()
@@ -977,21 +975,6 @@ for name in *{"Ranger", "Fighter", "Templar", "Rogue", "Green Mage", "Black Mage
                             BonusesUtils.create_animation @, instance, "spr_bonuses.mana", 0.5
                         instance\heal_mp(10)
                 @kill_tracker += 1
-        -- TODO reconsider whether Necro needs corrosive skin
-        --on_receive_melee_func: (attacker, caster, damage) =>
-        --    if name == "Necromancer"
-        --        attacker\direct_damage(damage * 0.33, caster)
-        --        for _ in screens()
-        --            if caster\is_local_player()
-        --                EventLog.add("Your corrosive flesh hurts #{attacker.name} as you are hit!", COL_PALE_BLUE)
-        --    if GameState.frame > LAST_WARNING\get() + 100 and not caster.is_ghost
-        --        low_num = 50
-        --        if name == "Necromancer"
-        --            low_num = 30
-        --        if caster.stats.hp - damage <= low_num or caster.stats.hp - damage <= caster\effective_stats().max_hp * 0.1
-        --            LAST_WARNING\set GameState.frame
-        --            play_sound "sound/allyislow1c.ogg"
-        --    return damage
     }
 
 -- Move in a direction, attacking everyone along the way
@@ -1050,7 +1033,7 @@ DataW.effect_create {
     stat_func: (caster, old, new) =>
         new.speed = 0
         --caster.stats.attack_cooldown = 2
-        new.strength += caster.stats.level
+        new.powerfulness += caster.stats.level
         new.defence += caster.stats.level * 5
         new.willpower += caster.stats.level * 5
 }

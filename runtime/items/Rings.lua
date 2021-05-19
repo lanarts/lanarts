@@ -25,7 +25,7 @@ Data.equipment_create {
 
 Data.equipment_create {
     name = "Ring of Ethereal Armour",
-    description = "You may only have this ring equipped, of all your rings. You may equip an additional piece of body armour.",
+    description = "You may equip an additional piece of body armour.",
     type = "ring",
 
     shop_cost = { 225, 405 },
@@ -57,16 +57,16 @@ Data.equipment_create {
     effects_granted = {"VampiricWeapon"}
 }
 
-Data.equipment_create {
-    name = "Abolishment Ring",
-    description = "Abolishes the user's magic, granting them 1 strength point for every 3 points of magic.",
-    type = "ring",
+-- Data.equipment_create {
+--     name = "Abolishment Ring",
+--     description = "Abolishes the user's magic, granting them 1 powerfulness point for every 3 points of magic.",
+--     type = "ring",
 
-    shop_cost = { 155, 205 },
+--     shop_cost = { 155, 205 },
 
-    spr_item = "spr_rings.abolishment",
-    effects_granted = {"Abolishment"}
-}
+--     spr_item = "spr_rings.abolishment",
+--     effects_granted = {"Abolishment"}
+-- }
 
 Data.equipment_create {
     name = "Ogre's Ring",
@@ -77,7 +77,7 @@ Data.equipment_create {
 
     spr_item = "ogres ring",
 
-    stat_bonuses = { defence = -1, strength = 2}
+    stat_bonuses = { defence = -1, powerfulness = 2}
 }
 
 Data.equipment_create {

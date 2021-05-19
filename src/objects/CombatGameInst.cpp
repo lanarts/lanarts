@@ -653,8 +653,8 @@ static void combine_stat_hash(unsigned int& hash, CombatStats& stats) {
 
     combine_hash(hash, core.hp, core.max_hp);
     combine_hash(hash, core.mp, core.max_mp);
-    combine_hash(hash, core.strength, core.defence);
-    combine_hash(hash, core.magic, core.willpower);
+    combine_hash(hash, core.powerfulness, core.defence);
+    combine_hash(hash, core.willpower, 0);
     combine_hash(hash, core.hpregen, core.mpregen);
     combine_hash(hash, (unsigned int&) core.hp_regened,
             (unsigned int&) core.mp_regened);

@@ -186,6 +186,9 @@ void MonsterController::set_monster_headings(GameState* gs,
             continue;
         }
 
+        if (eb.current_action == EnemyBehaviour::INACTIVE && eb.randomization.random_walk_timer > 0) {
+			eb.randomization.random_walk_timer = 0;
+        }
 		eb.current_action = EnemyBehaviour::CHASING_PLAYER;
 		eb.path.clear();
 		if (is_visible(gs, e, p)) {

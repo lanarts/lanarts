@@ -56,7 +56,7 @@ DataW.spell_create {
         spr_attack: "crystal spear"
         range: 150
         speed: 9
-        power: {base: {0, 0}, magic: 0.5, strength: 0.5}
+        power: {base: {0, 0}, magic: 0.5, powerfulness: 0.5}
     }
     cooldown: 30
     resist_modifier: 0.5
@@ -181,7 +181,7 @@ DataW.spell_create {
                 time_left: 100,
                 attacker: @caster,
                 damage: 8
-                power: caster.stats.magic
+                power: caster.stats.powerfulness
                 poison_rate: 25,
                 magic_percentage: 1,
             })
@@ -234,7 +234,7 @@ DataW.spell_create {
     name: "Baleful Regeneration",
     types: {"Black"}
     spr_spell: "spr_spells.regeneration",
-    description: "You tap into necromancy to very quickly bind your wounds, until your are fully healed or its power runs out. Takes longer to run out the more willpower you have.",
+    description: "You tap into necromancy to very quickly bind your wounds, until your are fully healed or its power runs out. Takes longer to run out the more power you have.",
     -- TODO have an interface for displaying custom stats, -- description_draw_func ?? Maybe directly call the draw API, but have positioning handled.
     -- TODO then have an easy mechanism for telling if the text is hovered over and letting the formula be displayed if so.
     mp_cost: 0,
@@ -248,10 +248,10 @@ DataW.spell_create {
         return not caster\has_effect("Baleful Regeneration") and not caster\has_effect("Exhausted")
     autotarget_func: (caster) -> caster.x, caster.y
     action_func: (caster, x, y) ->
-        {:willpower} = caster\effective_stats()
-        -- Level 1 willpower is expected to be 7, and any additional willpower grants half a second of cooldown time.
+        {:powerfulness} = caster\effective_stats()
+        -- Level 1 powerfulness is expected to be 7, and any additional powerfulness grants half a second of cooldown time.
         -- At level 7, this is an extra 3 seconds of cooldown, plus items, leading to ~double expected time.
-        caster\add_effect("Baleful Regeneration", 60 * 6 + (willpower - 7) * 30)
+        caster\add_effect("Baleful Regeneration", 60 * 6 + (powerfulness - 7) * 30)
         for _ in screens()
             if caster\is_local_player()
                 EventLog.add("You start to regenerate quickly!", {200,200,255})
@@ -266,7 +266,7 @@ DataW.spell_create {
     name: "Summon Dark Aspect",
     types: {"Black"}
     spr_spell: "spr_spells.summon",
-    description: "You summon a dark companion, at the cost of health. The companion is stronger depending on the caster's willpower.",
+    description: "You summon a dark companion, at the cost of health. The companion is stronger depending on the caster's power.",
     mp_cost: 0,
     cooldown: 45,
     can_cast_with_held_key: false,
@@ -283,7 +283,7 @@ DataW.spell_create {
             if caster\is_local_player()
                 EventLog.add("You must be a necromancer to cast this spell!", {200,200,255})
             return false
-        amount = math.max 1, math.ceil((caster\effective_stats().willpower - 4) / 2)
+        amount = math.max 1, math.ceil((caster\effective_stats().powerfulness - 4) / 2)
         {:n_summons} = caster\get_effect("Summoner")
         if n_summons >= amount
             if caster\is_local_player()
@@ -301,13 +301,12 @@ DataW.spell_create {
                 -- -- Make sure this monster cannot live outside its summoner's range for very long:
                 --eff = obj\add_effect("DiesOutsideOfSummonerRange", INFINITE_DURATION)
                 -- eff.summoner = caster
-                -- Buff this monster based on caster's willpower:
-                obj.stats.hp += math.floor(caster\effective_stats().willpower * 5)
-                obj.stats.max_hp += math.floor(caster\effective_stats().willpower * 5)
-                obj.stats.strength += math.floor(caster\effective_stats().willpower / 2)
-                obj.stats.magic += math.floor(caster\effective_stats().willpower / 2)
-                obj.stats.defence += math.floor(caster\effective_stats().willpower / 2)
-                obj.stats.willpower += math.floor(caster\effective_stats().willpower / 2)
+                -- Buff this monster based on caster's powerfulness:
+                obj.stats.hp += math.floor(caster\effective_stats().powerfulness * 5)
+                obj.stats.max_hp += math.floor(caster\effective_stats().powerfulness * 5)
+                obj.stats.powerfulness += math.floor(caster\effective_stats().powerfulness / 2)
+                obj.stats.defence += math.floor(caster\effective_stats().powerfulness / 2)
+                obj.stats.willpower += math.floor(caster\effective_stats().powerfulness / 2)
             eff.monster = (if type(monster) == "string" then monster else random_choice(monster))
             eff.duration = 5
 }
@@ -361,11 +360,6 @@ DataW.spell_create {
             eff = caster\add_effect("Summoning", 20)
             eff.summon_xy = {x, y}
             eff.on_summon = (obj) ->
-                -- Buff this monster based on caster's willpower:
-                --obj.stats.strength += math.floor(caster\effective_stats().willpower / 2)
-                --obj.stats.magic += math.floor(caster\effective_stats().willpower / 2)
-                --obj.stats.defence += math.floor(caster\effective_stats().willpower / 2)
-                --obj.stats.willpower += math.floor(caster\effective_stats().willpower / 2)
                 lifelink = obj\add_effect("Lifelink", INFINITE_DURATION)
                 lifelink.linker = caster
                 append caster\get_effect("Lifelinker").links, obj

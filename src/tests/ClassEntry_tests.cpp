@@ -21,10 +21,9 @@ SUITE(ClassEntry) {
 				"        mp = 3,\n"
 				"        hpregen = 0.1,\n"
 				"        mpregen = 0.2,\n"
-				"        strength = 4,\n"
+				"        powerfulness = 4,\n"
 				"        defence = 5,\n"
 				"        willpower = 6,\n"
-				"        magic = 7,\n"
 				"        equipment = {\n"
 				"        }\n"
 				"    },\n"
@@ -40,10 +39,9 @@ SUITE(ClassEntry) {
 		CHECK(1 ==  mage.starting_stats.movespeed);
 		CHECK(2 ==  mage.starting_stats.core.hp);
 		CHECK(3 ==  mage.starting_stats.core.mp);
-		CHECK(4 ==  mage.starting_stats.core.strength);
+		CHECK(4 ==  mage.starting_stats.core.powerfulness);
 		CHECK(5 ==  mage.starting_stats.core.defence);
 		CHECK(6 ==  mage.starting_stats.core.willpower);
-		CHECK(7 ==  mage.starting_stats.core.magic);
 
 		L.finish_check();
 	}

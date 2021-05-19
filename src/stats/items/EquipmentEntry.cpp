@@ -134,10 +134,9 @@ void EquipmentEntry::parse_lua_table(const LuaValue& table) {
 			(stat_modifiers.core_mod.max_mp < 0) ||
 			(stat_modifiers.core_mod.mp < 0) ||
 			(stat_modifiers.core_mod.hpregen < 0) ||
-			(stat_modifiers.core_mod.magic < 0) ||
 			(stat_modifiers.core_mod.mpregen < 0) ||
 			(stat_modifiers.core_mod.spell_velocity_multiplier < 1) ||
-			(stat_modifiers.core_mod.strength < 0) ||
+			(stat_modifiers.core_mod.powerfulness < 0) ||
 			(stat_modifiers.core_mod.willpower < 0) ||
 			(stat_modifiers.core_mod.defence < 0);
 		// auto equip if there are no downsides

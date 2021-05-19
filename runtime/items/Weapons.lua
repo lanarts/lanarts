@@ -52,7 +52,7 @@ DataW.projectile_create {
     speed = 6,
     cooldown = 45,
     damage = {base = {3,4}},
-    power = {base = {0,1}, strength = 1.0}
+    power = {base = {0,1}, powerfulness = 1.0}
 }
 
 DataW.weapon_create {
@@ -123,9 +123,6 @@ DataW.weapon_create {
 
     spr_item = "spr_weapons.short_sword1",
 
---stat_bonuses = {
-    --    strength = 1
-    --},
     cooldown = 40,
 
     range = 7
@@ -141,7 +138,7 @@ DataW.weapon_create {
 --    spr_item = "spr_weapons.sword",
 --
 --    --stat_bonuses = {
---    --    strength = 2
+--    --    powerfulness = 2
 --    --},
 --
 --    cooldown = 40,
@@ -258,7 +255,7 @@ DataW.weapon_create {
 
     spr_item = "iron broadsword",
 
-    --stat_bonuses = {strength = 2},
+    --stat_bonuses = {powerfulness = 2},
     damage_multiplier = 1.10,
 
     cooldown = 60,
@@ -279,7 +276,7 @@ DataW.weapon_create {
     spr_item = "spr_weapons.giant_club2",
     
     damage_multiplier = 1.25,
-    stat_bonuses = {strength = 3},
+    stat_bonuses = {powerfulness = 3},
 
     cooldown = 55,
 
@@ -355,8 +352,8 @@ DataW.weapon_create {
 --    randart_weight = 5,
 --    randart_sprites = {"spr_weapons.randart_triple_sword1", "spr_weapons.randart_triple_sword2"},
 --
---    damage = {base = {10, 15}, strength = 1.6},
---    power = {base = 12, strength = 1.0},
+--    damage = {base = {10, 15}, powerfulness = 1.6},
+--    power = {base = 12, powerfulness = 1.0},
 --
 --    cooldown = 85,
 --
@@ -372,8 +369,8 @@ DataW.weapon_create {
 --
 --    spr_item = "battle axe",
 --
---    damage = {base = {9, 13}, strength = 1.4},
---    power = {base = 6, strength = 0.3},
+--    damage = {base = {9, 13}, powerfulness = 1.4},
+--    power = {base = 6, powerfulness = 0.3},
 --
 --    cooldown = 65,
 --
@@ -532,7 +529,7 @@ DataW.weapon_create {
     damage_multiplier = 1.50, -- +50% damage bonus
 
     cooldown = 45,
-    stat_bonuses = {mp = -30, hp = -30, strength = 2, magic = 2, defence = 3, willpower = 3},
+    stat_bonuses = {mp = -30, hp = -30, powerfulness = 2, magic = 2, defence = 3, willpower = 3},
 
     range = 300
 }
@@ -546,14 +543,13 @@ DataW.weapon_create {
     spr_item = "none",
 
     types = {"Bludgeon"}, 
-    damage = {base = {2, 5}, strength = 1.5},
-    power = {base = 2, strength = 0.3},
+    damage = {base = {8, 16}},
+    power = {base = 0, powerfulness = 1},
 
-    cooldown = 70,
+    cooldown = 80,
 
     range = 7
 }
-
 
 DataW.weapon_create {
     name = "Basic Melee",
@@ -561,10 +557,9 @@ DataW.weapon_create {
 
     spr_item = "none",
 
-
     types = {"Bludgeon"}, 
-    damage = {base = {2, 5}, strength = 1},
-    power = {base = 0, strength = 0.2},
+    damage = {base = {4, 8}},
+    power = {base = 0, powerfulness = 1},
 
     cooldown = 40,
 
@@ -578,10 +573,10 @@ DataW.weapon_create {
     spr_item = "none",
 
     types = {"Bludgeon"}, 
-    damage_type = {magic = 0.5, physical = 0.5},
+    damage_type = {magic = 1},
 
-    damage = {base = {2, 5}, strength = 1},
-    power = {base = 0, strength = 0.2},
+    damage = {base = {4, 8}},
+    power = {base = 0, powerfulness = 1},
 
     cooldown = 40,
 
@@ -597,8 +592,8 @@ DataW.weapon_create {
     types = {"Bludgeon"}, 
     damage_type = {magic = 0.5, physical = 0.5},
 
-    damage = {base = {2, 5}, strength = 0.5},
-    power = {base = 0, strength = 0.2},
+    damage = {base = {2, 4}},
+    power = {base = 0, powerfulness = 1},
 
     cooldown = 20,
 
@@ -613,8 +608,8 @@ DataW.weapon_create {
     spr_item = "none",
 
     types = {"Bludgeon"}, 
-    damage = {base = {2, 5}, strength = 0.5},
-    power = {base = 0, strength = 0.2},
+    damage = {base = {2, 4}},
+    power = {base = 0, powerfulness = 1},
 
     cooldown = 20,
 
@@ -629,8 +624,8 @@ DataW.weapon_create {
 
     types = {"Bludgeon"}, 
     damage_type = {magic = 0.5, physical = 0.5},
-    damage = {base = {2, 5}, strength = 0.5},
-    power = {base = 0, strength = 0.2},
+    damage = {base = {2, 4}},
+    power = {base = 0, powerfulness = 1},
 
     cooldown = 20,
 

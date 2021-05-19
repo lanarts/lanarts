@@ -9,15 +9,14 @@
 
 static void check_stat_multiplier(const CoreStatMultiplier& sm, int offset) {
 	CHECK( Range(1+offset, 2+offset) == sm.base );
-	CHECK( 3+offset == sm.strength );
-	CHECK( 4+offset == sm.magic );
-	CHECK( 5+offset == sm.defence);
-	CHECK( 6+offset == sm.willpower);
+	CHECK( 3+offset == sm.powerfulness );
+	CHECK( 4+offset == sm.defence);
+	CHECK( 5+offset == sm.willpower);
 }
 
 TEST(parse_core_stat_multiplier) {
 	const char* program =
-			" { base = {1,2}, strength = 3, magic = 4, defence = 5, willpower = 6 }";
+			" { base = {1,2}, powerfulness = 3, defence = 4, willpower = 5 }";
 	TestLuaState L;
 
 	CoreStatMultiplier sm = parse_core_stat_multiplier(
@@ -43,8 +42,8 @@ TEST(parse_cooldown_modifiers) {
 
 TEST(parse_damage_modifiers) {
 	const char* program =
-			"{ damage = { base = {1,2}, strength = 3, magic = 4, defence = 5, willpower = 6 },"
-					" power = { base = {7,8}, strength = 9, magic = 10, defence = 11, willpower = 12 },"
+			"{ damage = { base = {1,2}, powerfulness = 3, magic = 4, defence = 5, willpower = 6 },"
+					" power = { base = {7,8}, powerfulness = 9, magic = 10, defence = 11, willpower = 12 },"
 					" damage_type = { magic = 0.5, physical = 0.5 }}";
 	TestLuaState L;
 	DamageStats dmg = parse_damage_modifiers(luawrap::eval(L, program));
@@ -58,8 +57,8 @@ TEST(parse_damage_modifiers) {
 
 TEST(parse_defence_modifiers) {
 	const char* program =
-					" resistance = { base = {7,8}, strength = 9, magic = 10, defence = 11, willpower = 12 },"
-					" magic_resistance = { base = {19,20}, strength = 21, magic = 22, defence = 23, willpower = 24 } }";
+					" resistance = { base = {7,8}, powerfulness = 9, magic = 10, defence = 11, willpower = 12 },"
+					" magic_resistance = { base = {19,20}, powerfulness = 21, magic = 22, defence = 23, willpower = 24 } }";
 	TestLuaState L;
 	ArmourStats def = parse_defence_modifiers(luawrap::eval(L, program));
 	check_stat_multiplier(def.resistance, 6);

@@ -158,7 +158,7 @@ place_temple = (region_set) ->
 
     return place_vault_in region_set, Vaults.sealed_dungeon {
         tileset: Tilesets.temple
-        gold_placer: place_one_randart()
+        -- gold_placer: place_one_randart()
         door_placer: (map, xy) -> MapUtils.spawn_door(map, xy)
         dungeon_placer: callable_once (map, xy) ->
             portal = MapUtils.spawn_portal(map, xy, "spr_gates.enter_temple")
@@ -175,7 +175,7 @@ place_snake_pit = (region_set) ->
     -- Link to snake pit entrance
     return place_vault_in region_set, Vaults.sealed_dungeon {
         tileset: Tilesets.snake
-        gold_placer: place_one_randart()
+        -- gold_placer: place_one_randart()
         door_placer: (map, xy) ->
             MapUtils.spawn_door(map, xy)
         dungeon_placer: callable_once (map, xy) ->

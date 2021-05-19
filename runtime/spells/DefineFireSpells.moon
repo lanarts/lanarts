@@ -197,7 +197,7 @@ DataW.spell_create {
         caster\add_effect "Ring of Flames Stat Boost", duration
     console_draw_func: (get_next) =>
         damage = math.floor(RingOfFire._damage * 60 / 5)
-        power = @effective_stats().magic + TypeEffectUtils.get_power(@, "Red")
+        power = @effective_stats().powerfulness + TypeEffectUtils.get_power(@, "Red")
         draw_console_effect get_next(), tosprite("spr_spells.spell_icon_ring_of_flames"), {
             {COL_PALE_GREEN, damage}
             {COL_PALE_YELLOW, " damage per second"}
@@ -230,7 +230,7 @@ DataW.effect_create {
         caster.sprite_name = 'spr_enemies.dragons.fire_dragon'
     stat_func: (obj, old, new) =>
         new.defence += 6
-        new.strength += 6
+        new.powerfulness += 6
         new.willpower += 6
         new.speed *= 0.8
     remove_func: (caster) =>

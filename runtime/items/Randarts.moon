@@ -19,10 +19,10 @@ WEAPON_BASES = {
     -- Bludgeoning base weapons
     {"Mace", 100, COMMON, (for i=1,3 do "spr_weapons.randart_mace"..i)}
     -- Piercing base weapons
-    {"Short Bow", 100, SEMIRARE, {"spr_weapons.randart_shortbow"}}
-    {"Long Bow", 100, RARE, {"spr_weapons.urand_krishna", "spr_weapons.longbow3"}}
+    -- {"Short Bow", 100, SEMIRARE, {"spr_weapons.randart_shortbow"}}
+    -- {"Long Bow", 100, RARE, {"spr_weapons.urand_krishna", "spr_weapons.longbow3"}}
     -- Unclassified base weapons
-    --{"Wizard's Staff", 100, UNCOMMON, {"spr_weapons.staff_mummy"}}
+    {"Wizard's Staff", 100, UNCOMMON, {"spr_weapons.staff_mummy"}}
     {"Flaming Scimitar", 200, RARE, {"spr_weapons.urand_flaming_death"}}
     {"Ice Axe", 200, RARE, {"spr_weapons.urand_frostbite"}}
     --{"Vine Staff", 200, RARE, {"spr_weapons.spwpn_staff_of_olgreb"}}

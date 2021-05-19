@@ -64,7 +64,7 @@ Data.equipment_create {
     spr_item = "runed gloves",
 
     stat_bonuses = { 
-        strength = 1,
+        powerfulness = 1,
         defence = 2,
         willpower = 1,
     },

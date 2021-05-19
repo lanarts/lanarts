@@ -15,14 +15,14 @@ Data.equipment_create {
 
 Data.equipment_create {
     name = "Belt of Slaying",
-    description = "A belt infused with ogre strength.",
+    description = "A belt infused with ogre powerfulness.",
     type = "belt",
 
     shop_cost = { 120, 140 },
 
     spr_item = "spr_belts.slaying",
 
-    stat_bonuses = {strength = 1}
+    stat_bonuses = {powerfulness = 1}
 }
 
 Data.equipment_create {

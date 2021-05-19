@@ -13,8 +13,7 @@ TypeEffectUtils = require "spells.TypeEffectUtils"
 --        @old_sprite_name = obj.sprite_name
 --        obj.sprite_name = 'spr_enemies.undead.freezing_wraith'
 --    stat_func: (obj, old, new) =>
---        new.magic = math.max(new.magic - 4, 0)
---        new.strength = math.max(new.strength - 4, 0)
+--        new.powerfulness = math.max(new.powerfulness - 4, 0)
 --        new.speed *= 0.5
 --    remove_func: (obj) =>
 --        obj.sprite_name = @old_sprite_name
@@ -72,7 +71,7 @@ DataW.spell_create {
         bpower = TypeEffectUtils.get_power(obj, "Black")
         ObjectUtils.nearby_square_iterate obj, (xy) ->
             mon = SummonUtils.summon_one_hit_monster(obj, xy, "SummonedSkeleton", 100 + bpower * 10)
-            mon.stats.strength = obj.stats.willpower / 3
+            mon.stats.powerfulness = obj.stats.willpower / 3
             n_summoned += 1
             return n_summoned >= 10 + obj.stats.level * 3 + bpower * 2
 }

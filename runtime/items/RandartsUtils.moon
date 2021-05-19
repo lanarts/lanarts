@@ -20,7 +20,7 @@ _get_name_and_description = (rng, artifact, power_level) ->
         {"Gragh", "A #{lower} crafted with brutish determination."}
         {"Meeplod", "A #{lower} crafted over supernaturally hot fire."}
         {"Nik", "A #{lower} crafted by a dice roll."}
-        {"Orlov", "A #{lower} crafted by great strength."}
+        {"Orlov", "A #{lower} crafted by great powerfulness."}
         {"Doogal", "A #{lower} crafted by enchanting magic."}
         {"Stara", "A #{lower} crafted by terrible sacrifice."}
         {"Hopkin", "A #{lower} crafted by sheer coincidence."}
@@ -63,7 +63,7 @@ _get_name_and_description = (rng, artifact, power_level) ->
         "Cunning"
         "Silence"
         "Wisdom"
-        "Strength"
+        "Power"
         "Foreboding"
         "Awe"
         "Reason"
@@ -129,7 +129,7 @@ apply_core_stat_buff = () =>
         }
     return @add_bonus @rng\random_choice {
         "Polymath"
-        "Strength"
+        "Power"
         "Heart"
         "Mana"
         "Regeneration"
@@ -137,8 +137,8 @@ apply_core_stat_buff = () =>
         "Power"
         "Quickcast"
         "Flurry"
-        "Savage"
-        "Focus"
+        -- "Savage"
+        -- "Focus"
         "Shield"
         "Black"
         "White"

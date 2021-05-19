@@ -12,12 +12,11 @@ define_color_bonus = (name) ->
         effect: {
             console_draw_func: (obj, get_next) =>
                 draw_color_bound_effect BONUS, obj, get_next, {name},
-                    "+1 Strength, +1 Magic, Improved Spells."
+                    "+1 Power, Improved Spells."
                 get_next()
             stat_func: (obj, old, new) =>
                 if of_color obj, name
-                    new.strength += @n_derived
-                    new.magic += @n_derived
+                    new.powerfulness += @n_derived
         }
         item_draw_func: (options, x, y) =>
             @sprite\draw options, {x, y}

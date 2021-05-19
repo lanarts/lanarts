@@ -131,13 +131,13 @@ local PowerStrike = {
 local function ChargeCallback(_, caster)
     for _, mon in ipairs(Map.enemies_list(caster)) do
         local dist = vector_distance(mon.xy, caster.xy)
-        local range = 30 + caster.stats.strength + caster.stats.level * 20
+        local range = 30 + caster.stats.powerfulness + caster.stats.level * 20
         if dist < mon.target_radius + caster.target_radius + range then
             -- Perform two melee attacks on each monster
             caster:melee(mon)
             caster:melee(mon)
-            local str_diff = math.max(0, caster.stats.strength - mon.stats.strength)
-            -- Stun enemies longer based on strength difference 
+            local str_diff = math.max(0, caster.stats.powerfulness - mon.stats.powerfulness)
+            -- Stun enemies longer based on powerfulness difference 
             local thrown = mon:add_effect("Thrown", 40 + 10 * str_diff + caster.stats.level * 5)
             thrown.angle = vector_direction(caster.xy, mon.xy)
             for _ in screens() do
@@ -219,7 +219,7 @@ function Pain.action_func(caster, x, y, target)
     aura.animation_only = true
     aura.range = eff_range
     play_pained_sound()
-    local damage, power = random(3, 9), random(3,5) + stats.magic
+    local damage, power = random(3, 9), random(3,5) + stats.powerfulness
     power = power + TypeEffectUtils.get_power(caster, "Black")
     damage = damage * TypeEffectUtils.get_resistance(target, "Black")
     if target:damage(damage, power, 1, caster) then

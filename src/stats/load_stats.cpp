@@ -56,8 +56,7 @@ EquipmentStats parse_equipment(const YAML::Node& n) {
 
 const YAML::Node& operator >>(const YAML::Node& n, CoreStatMultiplier& sm) {
 	sm.base = parse_defaulted(n, "base", Range(0, 0));
-	sm.strength = parse_defaulted(n, "strength", 0.0f);
-	sm.magic = parse_defaulted(n, "magic", 0.0f);
+	sm.powerfulness = parse_defaulted(n, "powerfulness", 0.0f);
 	sm.defence = parse_defaulted(n, "defence", 0.0f);
 	sm.willpower = parse_defaulted(n, "willpower", 0.0f);
 	return n;
@@ -72,11 +71,10 @@ CoreStats parse_core_stats(const YAML::Node& n) {
 	core.hp = core.max_hp;
 	core.mp = core.max_mp;
 
-	core.strength = parse_defaulted(n, "strength", 0);
+	core.powerfulness = parse_defaulted(n, "powerfulness", 0);
 	core.spell_velocity_multiplier = parse_defaulted(n, "spell_velocity_multiplier", 1.0);
 	core.defence = parse_defaulted(n, "defence", 0);
 
-	core.magic = parse_defaulted(n, "magic", 0);
 	core.willpower = parse_defaulted(n, "willpower", 0);
 	return core;
 }
