@@ -123,6 +123,15 @@ function M.spawn_item_near(obj, item, amount, --[[Optional]] avoid_obj, --[[Opti
     end)
 end
 
+M.spiral_iterate = spiral_iterate
+
+function M.spawn_effect_object_near(obj, item, amount, --[[Optional]] avoid_obj, --[[Optional]] objX, --[[Optional]] objY)
+    local x, y = math.floor((objX or obj.x) / 32), math.floor((objY or obj.y) / 32)
+    spiral_iterate(function(dx, dy)
+        return try_spawn_item(obj, item, amount, x + dx, y + dy, avoid_obj)
+    end)
+end
+
 local function try_spawn_item(obj, item, amount, tx, ty, avoid_obj)
     if not viable_item_square(obj, tx, ty, avoid_obj) then
         return false

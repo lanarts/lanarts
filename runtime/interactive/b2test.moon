@@ -120,7 +120,7 @@ make_simulation = (outer_area) ->
                     -- TODO test for lingering objects to teleport them
                     body\SetLinearVelocity(b2.Vec2(dx, dy))
                 world\Step(TIME_STEP, ITERS, ITERS)
-            print(t\get_microseconds() / 1000)
+            --print(t\get_microseconds() / 1000)
             world\DrawDebugData()
             for body in *polygons
                 pos = body\GetPosition()

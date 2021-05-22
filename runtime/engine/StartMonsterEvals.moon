@@ -122,7 +122,6 @@ run_bot_tests = (raw_args) ->
         level_eval_step = (level, next_level) ->
             return _iterate CONFIGS, monster_eval_step(level, stats), next_level
         return _iterate {args.level}, level_eval_step, () ->
-            print pretty_tostring(stats, 0, false)
             file_dump_csv("saves/monster_stats.csv", stats)
             return game_exit("Done.")
 

@@ -38,5 +38,5 @@ projectiles:
     range: 300
     speed: 6
     cooldown: 45
-    damage: {base: [1,2], strength: .85}
-    power: {base: [0,1], strength: 0.2}
+    damage: {base: [1,2], powerfulness: .85}
+    power: {base: [0,1], powerfulness: 0.2}

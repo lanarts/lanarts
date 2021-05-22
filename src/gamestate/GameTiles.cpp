@@ -64,6 +64,9 @@ void GameTiles::set_solid(const Pos& xy, bool solid) {
 }
 
 bool GameTiles::is_solid(const Pos& xy) {
+	if (xy.x < 0 || xy.x >= size().w || xy.y < 0 || xy.y >= size().h) {
+		return true;
+	}
 	return (*_solidity)[xy];
 }
 

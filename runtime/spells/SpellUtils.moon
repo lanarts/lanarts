@@ -32,7 +32,7 @@ spell_object_type = (T) ->
     T.time_passed = () => @total_time - @time_left
     T.percent_passed = () => @time_passed() / @total_time
     T.in_time_slice = (frac1, frac2) =>
-        return (@time_passed() >= frac1 * @total_time and @time_passed() < frac2 * @total_time)
+        return (@time_passed() >= frac1 * @total_time and @time_passed() <= frac2 * @total_time)
     T.every = (duration) =>
         return @time_passed() % duration == 0
     T.caster_type_power = () =>

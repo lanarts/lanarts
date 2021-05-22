@@ -6,6 +6,9 @@ World = require "core.World"
 GameState = require "core.GameState"
 Display = require "core.Display"
 TypeEffectUtils = require "spells.TypeEffectUtils"
+EnemySpells = require "enemies.EnemySpells"
+
+M = nilprotect {} -- submodule
 
 random_xy_near = (obj) -> {obj.x + random(-32,32), obj.y + random(-32, 32)}
 
@@ -225,10 +228,10 @@ DataW.enemy_create {
     types: {"Green"}
     stats: {
         attacks: {{weapon: "Fast Melee"}}
-        hp: 60
+        hp: 65
         hpregen: 0.1
-        movespeed: 3
-        powerfulness: 20
+        movespeed: 3.5
+        powerfulness: 30
         defence: 0
         willpower: 0
     }
@@ -249,10 +252,10 @@ DataW.enemy_create {
     types: {"Green"}
     stats: {
         attacks: {{weapon: "Fast Melee"}}
-        hp: 20
+        hp: 30
         hpregen: 0.1
-        movespeed: 3
-        powerfulness: 25
+        movespeed: 3.5
+        powerfulness: 25 * 1.5
         defence: 0
         willpower: 0
     }
@@ -1759,7 +1762,6 @@ DataW.enemy_create {
     }
 }
 
-
 DataW.enemy_create {
     name: "Firelord"
     sprite: "red slime"
@@ -1780,3 +1782,60 @@ DataW.enemy_create {
       willpower: 6
     }
 }
+
+
+DataW.enemy_create {
+    name: "Slimetracker"
+    sprite: "spr_enemies.humanoid.deathcap"
+    death_sprite: "green blood" 
+    description: "A slime master"
+    appear_message: "A slimetracker appears!"
+    defeat_message: "The slimetracker is vanquished."
+    radius: 14
+    xpaward: 100
+    types: {"Green"}
+    stats: {
+        hp: 100
+        hpregen: 0.1
+        movespeed: 1
+        powerfulness: 20
+        defence: 4
+        willpower: 6
+    }
+    projectile: {
+        weapon_class: "magic"
+        damage_type: {magic: 0.5, physical: 0.5}
+        range: 400
+        radius: 11
+        power: {base: {0, 0}, powerfulness: 1}
+        cooldown: 90
+        speed: 8
+        spr_attack: "spr_effects.slimetornado"
+        on_deinit: () =>
+            viable_item_square = (txy) ->
+                {tx, ty} = txy
+                if Map.tile_is_solid(@map, txy)
+                    return false
+                x, y = tx * 32 + 16, ty * 32 + 16
+                collisions = Map.rectangle_collision_check(@map, {x - 16, y - 16, x+16, y+16}, @)
+                collisions = table.filter(collisions, (obj) -> getmetatable(obj) == EnemySpells.SLIME_MOLD)
+                return #collisions <= 0
+            state = {done: false, iterations: 100}
+            ObjectUtils.spiral_iterate (dx, dy) ->
+                xy = vector_add @xy, {dx*32,dy*32}
+                if dx * dx + dy * dy <= 50
+                    -- Form a circle
+                    if viable_item_square {math.floor(xy[1]/32.0), math.floor(xy[2]/32.0)}
+                        GameObject.add_to_level EnemySpells.SLIME_MOLD.create {
+                            :xy
+                            caster: @caster
+                            duration: 300
+                        }
+                state.iterations -= 1
+                if state.iterations <= 0
+                    state.done = true
+                return state.done
+    }
+}
+
+return M
