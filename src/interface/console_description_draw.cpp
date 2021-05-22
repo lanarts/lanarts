@@ -180,19 +180,24 @@ void draw_spell_icon_and_name(GameState* gs, SpellEntry& spl_entry, Colour col,
 
 //Drawn only as part of other draw_console_<something>_description functions
 static void draw_value(GameState* gs, DescriptionBoxHelper& dbh,
-                       const char* name, int bonus, const Colour& prefixcol = COL_GREEN,
+                       const char* name, float bonus, const Colour& prefixcol = COL_GREEN,
                        const Colour& valuecol = COL_PALE_GREEN, bool optional = true,
                        bool draw_plus_sign = false) {
     if (!optional || bonus != 0) {
         dbh.draw_prefix(gs, prefixcol, "%s", name);
-        dbh.draw_value(gs, valuecol,
-                       (bonus > 0 && draw_plus_sign) ? "+%d" : "%d", bonus);
+        if (bonus == int(bonus)) {
+            dbh.draw_value(gs, valuecol,
+                           (bonus > 0 && draw_plus_sign) ? "+%d" : "%d", int(bonus));
+        } else {
+            dbh.draw_value(gs, valuecol,
+                           (bonus > 0 && draw_plus_sign) ? "+%.1f" : "%1.f", bonus);
+        }
     }
 }
 
 //Drawn only as part of other draw_console_<something>_description functions
 static void draw_bonus(GameState* gs, DescriptionBoxHelper& dbh,
-                       const char* name, int bonus, const Colour& prefixcol = COL_GREEN,
+                       const char* name, float bonus, const Colour& prefixcol = COL_GREEN,
                        const Colour& valuecol = COL_PALE_GREEN, bool optional = true) {
     draw_value(gs, dbh, name, bonus, bonus > 0 ? prefixcol : COL_LIGHT_RED,
                bonus > 0 ? valuecol : COL_PALE_RED, optional, true);
@@ -208,8 +213,8 @@ static void draw_damage_per_second(
     Colour prefixcol = COL_GREEN, 
     Colour valuecol = COL_PALE_GREEN
 ) {
-    Range damage_range = damage.calculate_range(core);
-    Range power_range = power.calculate_range(core);
+    RangeF damage_range = damage.calculate_range(core);
+    RangeF power_range = power.calculate_range(core);
     float hits_per_second = 60.0f / cooldown;
     float power_bonus = 1 + 0.05f * (power_range.min + power_range.max) / 2.0f;
     float raw_damage_per_second = (damage_range.min + damage_range.max) * hits_per_second / 2.0f;
@@ -222,7 +227,7 @@ static void draw_statmult(GameState* gs, DescriptionBoxHelper& dbh,
                           Colour prefixcol = COL_GREEN, Colour valuecol = COL_PALE_GREEN,
                           bool optional = true) {
     if (!optional || !mult.is_empty()) {
-        Range value_range = mult.calculate_range(core);
+        RangeF value_range = mult.calculate_range(core);
         if (value_range.min < 0) {
             prefixcol = COL_LIGHT_RED;
             valuecol = COL_PALE_RED;
@@ -240,7 +245,7 @@ static void draw_statmult(GameState* gs, DescriptionBoxHelper& dbh,
 static void draw_percentage_modifier(GameState* gs, DescriptionBoxHelper& dbh,
                                      float modifier, const char* prefix, const Colour& prefixcol = COL_GREEN,
                                      const Colour& valuecol = COL_PALE_GREEN, bool optional = true) {
-    int percentage_mod = round(modifier * 100 - 100);
+    int percentage_mod = iround(modifier * 100 - 100);
     bool negative = percentage_mod < 0;
     if (!optional || percentage_mod != 0) {
         dbh.draw_prefix(gs, negative ? COL_LIGHT_RED : prefixcol, "%s", prefix);

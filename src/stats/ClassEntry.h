@@ -45,7 +45,7 @@ struct ClassEntry: public ResourceEntryBase {
 
 	LuaValue on_gain_level;
 	int hp_perlevel, mp_perlevel;
-	int str_perlevel, def_perlevel, will_perlevel;
+	float str_perlevel, def_perlevel, will_perlevel;
 	float mpregen_perlevel, hpregen_perlevel;
 	LuaValue raw_table;
 

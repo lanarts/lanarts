@@ -18,6 +18,7 @@ WEAPON_BASES = {
     {"Short Sword", 100, SEMIRARE, (for i=1,2 do "spr_weapons.randart_short_sword"..i)}
     -- Bludgeoning base weapons
     {"Mace", 100, COMMON, (for i=1,3 do "spr_weapons.randart_mace"..i)}
+    {"Orc Axe", 500, RARE, {"spr_weapons.spwpn_demon_axe", "spr_weapons.urand_axe_of_woe", "spr_weapons.spwpn_wrath_of_trog"}}
     -- Piercing base weapons
     -- {"Short Bow", 100, SEMIRARE, {"spr_weapons.randart_shortbow"}}
     -- {"Long Bow", 100, RARE, {"spr_weapons.urand_krishna", "spr_weapons.longbow3"}}
@@ -34,19 +35,18 @@ ARMOUR_BASES = {
     -- Body armour
     {"Leather Armour", 100, UNCOMMON, {"spr_armour.leather_armour3"}}
     {"Chainmail", 200, UNCOMMON / 2, {"spr_armour.chain_mail2", "spr_armour.chain_mail3"}}
-    --{"Crystalline Plate", 500, RARE, {"spr_armour.crystal_plate3"}}
+    {"Crystalline Plate", 500, RARE, {"spr_armour.crystal_plate3"}}
     {"Platemail", 500, UNCOMMON / 5, {"spr_armour.randart_plate"}}
     {"Robe", 100, UNCOMMON * 2, (for i=1,2 do "spr_armour.randart_robe"..i)}
     -- Gloves
     {"Steel Gloves", 100, RARE, (for i=1,4 do "spr_armour.randart_glove"..i)}
-    -- Boots
-    {"Leather Boots", 100, RARE, {"spr_boots.randart_leather_boots"}}
     -- Headgear
     {"Iron Helmet", 100, RARE, {"spr_armour.randart_helmet", "spr_armour.helmet_ego1", "spr_armour.helmet_ego2", "spr_armour.helmet_ego3", "spr_armour.helmet_ego4", "spr_armour.helmet_art1"}}
     {"Wizard's Hat", 100, UNCOMMON, (for i=2,5 do "spr_armour.hat#{i}")}
     -- Rings generated without a base
     -- Amulets generated without a base
     -- Ammo generated separately
+    -- Boots generated separately
     -- Legwear generated separately
 }
 

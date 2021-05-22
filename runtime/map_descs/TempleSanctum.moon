@@ -8,7 +8,7 @@ MapUtils = require "maps.MapUtils"
 
 return OldMaps.create_map_desc table.merge OldMaps.Dungeon2[3], {
     tileset: Tilesets.temple
-    label: "Temple Sanctum"
+    label: "Sanctum"
     on_generate: (map) ->
         ---------------------------------------------------------------------
         -- Place key vault, along with 2 scrolls of experience and a randartsay --

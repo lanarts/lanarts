@@ -22,13 +22,13 @@ rings = (chance, args) -> _filter{
     args.ignore_strong or{  item: "Wizard's Ring",  chance: 4                      }
     { item: "Ring of Spells",     chance: 8                      }
     { item: "Ring of Vitality",   chance: 8                      }
-    { item: "Ring of Stone",      chance: 4                      }
+    -- { item: "Ring of Stone",      chance: 4                      }
 }
 
 -- Amulets
 amulets = (chance, args) -> { 
     :chance
-    { item: "Amulet of the Wall", chance: 4 }
+    -- { item: "Amulet of the Wall", chance: 4 }
     { item: "Amulet of Fear", chance: 4 }
     { item: "Amulet of Ringholding", chance: 4 }
     { item: "Amulet of Trepidation", chance: 4 }
@@ -86,6 +86,7 @@ helmets = (chance, args) -> _filter{
     { item: "Crown of Mars",      chance: 1                      }
     { item: "Crown of Orcus",     chance: 1                      }
     { item: "Diana's Diadem",     chance: 1                      }
+    -- args.ignore_randarts or { item: RANDART("Helmet"), chance: 1}
 }
 
 -- Belts
@@ -98,20 +99,22 @@ belts = (chance, args) -> _filter {
     args.ignore_strong or { item: "Wishful Belt",        chance: 1                      }
     args.ignore_strong or { item: "Spiked Belt",        chance: 1                      }
     args.ignore_medium or { item: "Dank Belt",        chance: 2                      }
+    -- args.ignore_randarts or { item: RANDART("Belt"), chance: 1}
 }
 
 -- Legwear
 legwear  = (chance) -> { 
     :chance
-    { item: "Platelegs",      chance: 50                      }
-    { item: "Magic Skirt",        chance: 30                      }
-    { item: "Gallanthor's Skirt",        chance: 1                      }
+    { item: "Platelegs",      chance: 5000                      }
+    { item: "Magic Skirt",        chance: 3000                      }
+    { item: "Gallanthor's Skirt",        chance: 100                      }
+    -- args.ignore_randarts or { item: RANDART("Legwear"), chance: 1}
 }
 
 bows  = (chance, args) -> _filter {
     :chance 
     {
-        chance: 10
+        chance: 100
         args.ignore_weak or {
             chance: 100
             { item: "Short Bow",          chance: 2                      }
@@ -134,26 +137,27 @@ bows  = (chance, args) -> _filter {
 armour = (chance, args) -> _filter {
     :chance,
     -- Body Armour
-    args.ignore_weak or { item: "Leather Armour",     chance: 8                      }
-    args.ignore_weak or { item: "Robe",               chance: 6                      }
+    args.ignore_weak or { item: "Leather Armour",     chance: 800                      }
+    args.ignore_weak or { item: "Robe",               chance: 600                      }
     --args.ignore_weak or { item: "Green Robe",               chance: 1         }
     --args.ignore_weak or { item: "White Robe",               chance: 1         }
     --args.ignore_weak or { item: "Red Robe",               chance: 1         }
 
-    args.ignore_medium or{ item: "Chainmail",          chance: 4                      }
-    args.ignore_medium or { item: "Magician's Robe",    chance: 2                      }
-    args.ignore_medium or { item: "Robe of Mana",       chance: 4                      }
-    args.ignore_medium or { item: "Robe of Vitality",       chance: 2                      }
+    args.ignore_medium or{ item: "Chainmail",          chance: 400                      }
+    args.ignore_medium or { item: "Power Robe",        chance: 200                      }
+    args.ignore_medium or { item: "Robe of Mana",      chance: 400                      }
+    args.ignore_medium or { item: "Robe of Vitality",  chance: 200                      }
 
-    args.ignore_strong or { item: "Platemail",          chance: 2                      }
-    args.ignore_strong or { item: "Crystalline Plate",          chance: 1                      }
-    args.ignore_strong or { item: "Runed Robe",         chance: 1                      }
+    -- args.ignore_strong or { item: "Platemail",          chance: 2                      }
+    -- args.ignore_strong or { item: "Crystalline Plate",          chance: 1                      }
+    args.ignore_strong or { item: "Runed Robe",         chance: 100                     }
+    -- args.ignore_randarts or { item: RANDART("Armour"), chance: 1}                    }
 }
 
 boots = (chance, args) -> _filter {
     :chance 
     {
-        chance: 10
+        chance: 100
         args.ignore_weak or {
             chance: 100
             { item: "Leather Boots",      chance: 1                      }
@@ -169,13 +173,13 @@ boots = (chance, args) -> _filter {
             { item: "Jack Boots",           chance: 90                      }
         }
     }
---    args.ignore_randarts or { item: RANDART("Boots"), chance: 1}
+    -- args.ignore_randarts or { item: RANDART("Boots"), chance: 1}
 }
 
 gloves = (chance, args) -> _filter {
     :chance 
     {
-        chance: 10
+        chance: 100
         args.ignore_weak or {
             chance: 100
             { item: "Leather Gloves",      chance: 1                      }
@@ -188,13 +192,13 @@ gloves = (chance, args) -> _filter {
             { item: "Gloves of Confusion",           chance: 10                      }
         }
     }
---    args.ignore_randarts or { item: RANDART("Gloves"), chance: 1}
+    -- args.ignore_randarts or { item: RANDART("Gloves"), chance: 1}
 }
 
 weapons = (chance, args) -> _filter {
     :chance 
     {
-        chance: 1000
+        chance: 100
         args.ignore_weak or {
             chance: 10000
             { item: "Dagger",      chance: 1                      }
@@ -222,21 +226,7 @@ weapons = (chance, args) -> _filter {
         --    { item: "Gallanthor's 5-Colour Staff",                 chance: 4     }
         --}
     }
---    args.ignore_randarts or { item: RANDART("Weapon"), chance: 1}
-}
-
-M.store_items = {
-    consumables(60, ignore_weak: false)
-    rings(8, ignore_weak: true)
-    helmets(3, ignore_weak: true)
-    armour(5, ignore_weak: true)
-    belts(2, ignore_weak: true)
-    legwear(1, ignore_weak: true)
-    boots(1, ignore_weak: true)
-    amulets(2, ignore_weak: true)
-    --bows(5, ignore_weak: true)
-    gloves(5, ignore_weak: true)
-    weapons(8, {ignore_weak: true, ignore_medium: true})
+    -- args.ignore_randarts or { item: RANDART("Weapon"), chance: 1}
 }
 
 M.enchanted_items = {
@@ -272,6 +262,21 @@ M.basic_items = {
 }
 
 M.randart_items = require("items.Randarts").RANDARTS
+
+M.store_items = {
+    consumables(60, ignore_weak: false)
+    rings(8, ignore_weak: true)
+    helmets(3, ignore_weak: true)
+    armour(5, ignore_weak: true)
+    belts(2, ignore_weak: true)
+    legwear(1, ignore_weak: true)
+    boots(1, ignore_weak: true)
+    amulets(2, ignore_weak: true)
+    --bows(5, ignore_weak: true)
+    gloves(5, ignore_weak: true)
+    weapons(8, {ignore_weak: true, ignore_medium: true})
+    table.merge M.randart_items[1], {chance: 1}
+}
 
 M.epic_store_items = {
     consumables(40, ignore_weak: true)

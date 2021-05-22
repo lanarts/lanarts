@@ -22,7 +22,7 @@ Data.equipment_create {
     spr_item = "iron boots",
 
     stat_bonuses = {
-        defence = 2,
+        defence = 1,
     },
 }
 
@@ -53,7 +53,7 @@ Data.equipment_create {
     stat_bonuses = {
         hpregen = 2 / 60,
         powerfulness = 1,
-        defence = 3,
+        defence = 1,
     }
 }
 
@@ -67,8 +67,8 @@ Data.equipment_create {
     spr_item = "spr_boots.boots2_jackboots",
 
     stat_bonuses = {
-        hp = 30,
-        defence = 2,
+        hp = 15,
+        defence = 1,
     },
 }
 Data.equipment_create {
@@ -81,7 +81,7 @@ Data.equipment_create {
     spr_item = "spr_boots.boots3_stripe",
 
     stat_bonuses = {
-        defence = 2,
+        defence = 1,
         spell_velocity_multiplier = 1.50
     }
 }

@@ -77,7 +77,7 @@ local LANARTS_ONLY_RANDARTS = (os.getenv("LANARTS_RANDARTS") ~= nil)
 function M.item_generate(group, --[[Optional]] randart_power_level, --[[Optional]] randart_chance)
     randart_chance = randart_chance or RANDART_CHANCE
     randart_power_level = randart_power_level or 1
-    if LANARTS_ONLY_RANDARTS or randomf() <= randart_chance / 100 then
+    if LANARTS_ONLY_RANDARTS or randomf() <= randart_chance / 50.0 then
         return M.randart_generate(randart_power_level)
     end
     return M.raw_item_generate(group)

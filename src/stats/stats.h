@@ -31,7 +31,7 @@ struct CoreStats {
 	int mp = 0, max_mp = 0;
 	float hp_bleed = 0; // Amount of 'locked out' HP that can't be regenerated.
 	float mp_bleed = 0; // Amount of 'locked out' MP that can't be regenerated.
-	int powerfulness = 0, defence = 0, willpower = 0;
+	float powerfulness = 0, defence = 0, willpower = 0;
 	float hpregen = 0, mpregen = 0;
 	// Values < 0
 	float hp_regened = 0, mp_regened = 0;
@@ -60,7 +60,7 @@ struct CoreStatMultiplier {
 		return base.min == 0 && base.max == 0 && powerfulness == 0 && defence == 0
 				&& willpower == 0;
 	}
-	Range calculate_range(const CoreStats& stats) const;
+	RangeF calculate_range(const CoreStats& stats) const;
 	float calculate(MTwist& mt, const CoreStats& stats) const;
 };
 

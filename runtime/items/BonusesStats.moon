@@ -20,27 +20,27 @@ define_stat_bonus = (name, description, stat_bonuses) ->
 
 define_stat_bonus "Polymath",
     "Gain Willpower.",
-    {willpower: 2}
+    {willpower: 1}
 
 define_stat_bonus "Power",
     "Gain Power",
-    {powerfulness: 2}
+    {powerfulness: 1}
 
 define_stat_bonus "Heart",
     "Gain Health.",
-    {hp: 30}
+    {hp: 15}
 
 define_stat_bonus "Mana",
     "Gain Mana.",
-    {mp: 30}
+    {mp: 15}
 
 define_stat_bonus "Regeneration",
     "Gain Health Regeneration.",
-    {hpregen: 4/60}
+    {hpregen: 2/60}
 
 define_stat_bonus "Wit",
     "Gain Mana Regeneration.",
-    {mpregen: 4/60}
+    {mpregen: 2/60}
 
 -- May 16 2021 Remove firing rate buffs
 -- define_stat_bonus "Quickshot",
@@ -59,9 +59,9 @@ define_stat_bonus "Speedbolt",
     "Increase spell velocity.",
     {spell_velocity_multiplier: 1.3}
 
--- define_stat_bonus "Savage",
---     "Gain Strength, but lose Defence.",
---     {powerfulness: 4, defence: -2}
+define_stat_bonus "Savage",
+    "Gain Power, but lose Defence.",
+    {powerfulness: 2, defence: -1}
 
 -- define_stat_bonus "Focus",
 --     "Gain Magic, but lose Willpower.",
@@ -69,4 +69,4 @@ define_stat_bonus "Speedbolt",
 
 define_stat_bonus "Shield",
     "Gain Defence.",
-    {defence: 2}
+    {defence: 1}

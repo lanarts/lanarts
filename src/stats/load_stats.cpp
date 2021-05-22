@@ -71,11 +71,11 @@ CoreStats parse_core_stats(const YAML::Node& n) {
 	core.hp = core.max_hp;
 	core.mp = core.max_mp;
 
-	core.powerfulness = parse_defaulted(n, "powerfulness", 0);
-	core.spell_velocity_multiplier = parse_defaulted(n, "spell_velocity_multiplier", 1.0);
-	core.defence = parse_defaulted(n, "defence", 0);
+	core.powerfulness = parse_defaulted(n, "powerfulness", 0.0f);
+	core.spell_velocity_multiplier = parse_defaulted(n, "spell_velocity_multiplier", 1.0f);
+	core.defence = parse_defaulted(n, "defence", 0.0f);
 
-	core.willpower = parse_defaulted(n, "willpower", 0);
+	core.willpower = parse_defaulted(n, "willpower", 0.0f);
 	return core;
 }
 

@@ -83,10 +83,10 @@ void CoreStats::apply_as_bonus(const CoreStats& bonus_stats) {
 	mpregen += bonus_stats.mpregen;
 }
 
-Range CoreStatMultiplier::calculate_range(const CoreStats& stats) const {
+RangeF CoreStatMultiplier::calculate_range(const CoreStats& stats) const {
 	float stats_sum = stats.powerfulness * powerfulness + stats.defence * defence
 			+ stats.willpower * willpower;
-	return Range(base.min + round(stats_sum), base.max + round(stats_sum));
+	return RangeF(base.min + stats_sum, base.max + stats_sum);
 }
 
 float CoreStatMultiplier::calculate(MTwist& mt, const CoreStats& stats) const {
@@ -155,7 +155,7 @@ CoreStats parse_core_stats(const LuaField& value, bool required) {
 	core.spell_velocity_multiplier = defaulted(value, "spell_velocity_multiplier", 1.0f);
 
 	core.max_mp = defaulted(value, "mp", 0);
-        core.max_hp = defaulted(value, "hp", 0);
+    core.max_hp = defaulted(value, "hp", 0);
 
 	core.hp = core.max_hp;
 	core.mp = core.max_mp;
@@ -163,10 +163,10 @@ CoreStats parse_core_stats(const LuaField& value, bool required) {
 	core.hpregen = defaulted(value, "hpregen", 0.0f);
 	core.mpregen = defaulted(value, "mpregen", 0.0f);
 
-	core.powerfulness = defaulted(value, "powerfulness", 0);
-	core.defence = defaulted(value, "defence", 0);
+	core.powerfulness = defaulted(value, "powerfulness", 0.0f);
+	core.defence = defaulted(value, "defence", 0.0f);
 
-	core.willpower = defaulted(value, "willpower", 0);
+	core.willpower = defaulted(value, "willpower", 0.0f);
 	return core;
 }
 

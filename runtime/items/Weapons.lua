@@ -9,6 +9,7 @@ Data.projectile_create {
     spr_item = "none"
 }
 
+-- TODO not currently in the game
 DataW.projectile_create {
     name = "Arrow",
     shop_cost = {2,3},
@@ -22,6 +23,7 @@ DataW.projectile_create {
     speed = 6.75
 }
 
+-- TODO not currently in the game
 DataW.projectile_create {
     name = "Silver Arrow",
     shop_cost = {3,4},
@@ -39,6 +41,7 @@ DataW.projectile_create {
     speed = 7
 }
 
+-- TODO the quiver system is only usedd for stones currently
 DataW.projectile_create {
     name = "Stone",
     shop_cost = {2,2},
@@ -46,12 +49,12 @@ DataW.projectile_create {
     weapon_class = "unarmed",
     types = {"Bludgeon"},
     spr_item = "stone",
-    drop_chance = 90, -- % chance
+    drop_chance = 50, -- % chance
     -- Stats
     range = 300,
     speed = 6,
-    cooldown = 45,
-    damage = {base = {3,4}},
+    cooldown = 30/1.2,
+    damage = {base = {5,6}},
     power = {base = {0,1}, powerfulness = 1.0}
 }
 
@@ -235,11 +238,11 @@ DataW.weapon_create {
     type = "short blades",
     types = {"Slashing"},
 
-    shop_cost = {100, 160},
+    shop_cost = {300, 560},
 
     spr_item = "spr_weapons.double_sword",
 
-    damage_multiplier = 1.25,
+    damage_multiplier = 1.1,
     cooldown = 45,
 
     range = 7
@@ -275,8 +278,8 @@ DataW.weapon_create {
 
     spr_item = "spr_weapons.giant_club2",
     
-    damage_multiplier = 1.25,
-    stat_bonuses = {powerfulness = 3},
+    damage_multiplier = 1.1,
+    stat_bonuses = {powerfulness = 1},
 
     cooldown = 55,
 
@@ -402,11 +405,11 @@ DataW.weapon_create {
     types = {
         "Bludgeon"
     },
-    shop_cost = {100, 120},
+    shop_cost = {120, 150},
 
     spr_item = "orc axe",
 
-    cooldown = 85,
+    cooldown = 70,
 
     range = 8
 }
@@ -421,7 +424,7 @@ DataW.weapon_create {
 
     spr_item = "spr_weapons.spwpn_scythe_of_curses",
 
-    damage_multiplier = 1.25,
+    damage_multiplier = 1.1,
     cooldown = 25,
 
     range = 5
@@ -438,7 +441,7 @@ DataW.weapon_create {
 
     spr_item = "spr_weapons.urand_flaming_death",
 
-    damage_multiplier = 1.25,
+    damage_multiplier = 1.1,
     cooldown = 25,
 
     range = 5
@@ -454,7 +457,7 @@ DataW.weapon_create {
 
     spr_item = "iron scimitar",
 
-    damage_multiplier = 1.25,
+    damage_multiplier = 1.1,
     cooldown = 25,
 
     range = 5
@@ -508,7 +511,7 @@ DataW.weapon_create {
 
     uses_projectile = true,
 
-    damage_multiplier = 1.25, -- +25% damage bonus
+    damage_multiplier = 1.1, -- +10% damage bonus
 
     cooldown = 55,
 

@@ -254,6 +254,7 @@ get_ring_randarts = _get_randarts_item_type("spr_rings.randarts", "Ring", "ring"
 get_belt_randarts = _get_randarts_item_type("spr_belts.randarts", "Belt", "belt")
 get_legwear_randarts = _get_randarts_item_type("spr_legwear.randarts", "Pants", "legwear")
 get_amulet_randarts = _get_randarts_item_type("spr_amulets.randarts", "Amulet", "amulet")
+get_boots_randarts = _get_randarts_item_type("spr_boots.randarts", "Boots", "boots")
 
 -- Define randart stones and arrows:
 get_ammo_randarts = (rng, level, weight) ->

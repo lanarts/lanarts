@@ -88,18 +88,18 @@ static void draw_player_base_stats(GameState* gs, PlayerInst* player_inst,
 	gs->font().drawf(COL_GOLD, p1, "Level %d",
                 player_inst->class_stats().xplevel);
 
-    gs->font().drawf(COL_GOLD, p2, "Power %d", core.powerfulness);
+    gs->font().drawf(COL_GOLD, p2, "Power %d", iround(core.powerfulness));
 
 	p1.y += y_interval;
 	p2.y += y_interval;
 
-    gs->font().drawf(COL_PALE_BLUE, p1, "Will %d", core.willpower);
+    gs->font().drawf(COL_PALE_BLUE, p1, "Will %d", iround(core.willpower));
     gs->font().drawf(COL_PALE_BLUE, p2, "Regen %.1f", core.mpregen * 60.f);
 
 	p1.y += y_interval;
 	p2.y += y_interval;
 
-	gs->font().drawf(COL_PALE_GREEN, p1, "Defence %d", core.defence);
+	gs->font().drawf(COL_PALE_GREEN, p1, "Defence %d", iround(core.defence));
     gs->font().drawf(COL_PALE_GREEN, p2, "Heal %.1f", core.hpregen * 60.f);
 
 	p1.y += y_interval;

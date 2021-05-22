@@ -11,7 +11,7 @@ Data.equipment_create {
 
     stat_bonuses = { 
         spell_cooldown_multiplier = 1.1,
-        defence = 2,
+        defence = 1,
     },
 }
 
@@ -26,8 +26,8 @@ Data.equipment_create {
     spr_item = "spr_armour.chain_mail1",
 
     stat_bonuses = { 
-        defence = 3,
-        spell_cooldown_multiplier = 1.15
+        defence = 1.5,
+        spell_cooldown_multiplier = 1.2
     },
 }
 
@@ -41,8 +41,7 @@ Data.equipment_create {
     spr_item = "spr_armour.crystal_plate2",
 
     stat_bonuses = { 
-        defence = 3,
-        willpower = 3,
+        defence = 2
     }
 }
 
@@ -56,29 +55,9 @@ Data.equipment_create {
     spr_item = "platemail",
 
     stat_bonuses = { 
-        defence = 3,
-        spell_cooldown_multiplier = 1.35
+        defence = 2,
+        spell_cooldown_multiplier = 1.3
     },
-}
-
-Data.equipment_create {
-    name = "Green Robe",
-    description = "The magic robes of a beginner green mage.",
-    type = "armour",
-
-    shop_cost = {10,20},
-
-    spr_item = "spr_armour.green_robe",
-
-    stat_bonuses = { 
-        willpower = 1,
-    },
-    effects_granted = {
-        {"RedResist", {resist = -1}},
-        {"RedBonus", {power = -1}},
-        {"GreenResist", {resist = 1}},
-        {"GreenBonus", {power = 1}},
-    }
 }
 
 Data.equipment_create {
@@ -96,49 +75,8 @@ Data.equipment_create {
 }
 
 Data.equipment_create {
-    name = "White Robe",
-    description = "The magic robes of a beginner white mage.",
-    type = "armour",
-
-    shop_cost = {40,100},
-
-    spr_item = "spr_armour.white_robe",
-
-    stat_bonuses = { 
-        willpower = 1,
-    },
-    effects_granted = {
-        {"BlackResist", {resist = -4}},
-        "BlackBonus",
-        {"WhiteResist", {resist = 4}},
-        "WhiteBonus"
-    }
-}
-
-Data.equipment_create {
-    name = "Red Robe",
-    description = "The magic robes of a beginner red mage.",
-    type = "armour",
-
-    shop_cost = {40,100},
-
-    spr_item = "spr_armour.robe_ego1",
-
-    stat_bonuses = { 
-        willpower = 1,
-    },
-    effects_granted = {
-        {"BlueResist", {resist = -4}},
-        "BlueBonus",
-        {"RedResist", {resist = 4}},
-        "RedBonus",
-    }
-}
-
-
-Data.equipment_create {
-    name = "Magician's Robe",
-    description = "An enchanted robe of protection and magical power.",
+    name = "Power Robe",
+    description = "An enchanted robe of power.",
     type = "armour",
 
     shop_cost = {75,90},
@@ -146,9 +84,7 @@ Data.equipment_create {
     spr_item = "enchanted robe",
 
     stat_bonuses = {
-        magic = 1,
-        willpower = 1,
-        defence = 1
+        powerfulness = 1
     }
 }
 
@@ -157,14 +93,13 @@ Data.equipment_create {
     description = "A heavily enchanted robe of protection and magical power.",
     type = "armour",
 
-    shop_cost = {115,135},
+    shop_cost = {200,335},
 
     spr_item = "runed robe",
 
     stat_bonuses = {
-        defence = 2, 
-        willpower = 2, 
-        magic = 1,
+        defence = 1, 
+        willpower = 1
     }
 }
 
@@ -173,7 +108,7 @@ Data.equipment_create {
     description = "A robe of great magical capacity.",
     type = "armour",
 
-    shop_cost = {55,105},
+    shop_cost = {200,245},
 
     spr_item = "robe of mana",
 
@@ -187,13 +122,12 @@ Data.equipment_create {
     description = "A robe that magically grants prolonged life to the user.",
     type = "armour",
 
-    shop_cost = {125,155},
+    shop_cost = {150,290},
 
     spr_item = "spr_armour.robe_of_health",
 
     stat_bonuses = {
-        hp = 35, 
-        willpower = 2, 
+        hp = 35
     }
 }
 
@@ -208,9 +142,8 @@ Data.equipment_create {
     stat_bonuses = {
         hp = 10,
         mp = 10,
-        defence = 3,
-        willpower = 3,
-        spell_cooldown_multiplier = 1.05
+        defence = 1,
+        willpower = 1,
     },
     effects_granted = {"ArmourManaGainOnKill"}
 }

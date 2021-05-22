@@ -1,15 +1,16 @@
-Data.equipment_create {
-    name = "Amulet of the Wall",
-    description = "An amulet that enables the user to create walls temporarily.",
-    type = "amulet",
+-- TODO better unique ability to replace this
+-- Data.equipment_create {
+--     name = "Amulet of the Wall",
+--     description = "An amulet that enables the user to create walls temporarily.",
+--     type = "amulet",
 
-    shop_cost = { 120, 140 },
+--     shop_cost = { 120, 140 },
 
-    spr_item = "spr_amulets.blue",
-    spells_granted = {"Wallanthor"},
+--     spr_item = "spr_amulets.blue",
+--     spells_granted = {"Wallanthor"},
 
-    stat_bonuses = { defence = 2 }
-}
+--     stat_bonuses = { defence = 2 }
+-- }
 
 -- Data.equipment_create {
 --     name = "Amulet of Protection",

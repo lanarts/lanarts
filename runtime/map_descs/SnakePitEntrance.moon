@@ -102,7 +102,7 @@ make_template = (rng, back_links={}, forward_links={}) ->
 
 
 return MapDesc.create {
-    map_label: "Snake Pit Entrance"
+    map_label: "Snake Pit"
     size: {130, 130}
     default_content: Tilesets.snake.wall
     arc_chance: 1.0 -- Always use arcs in snake pit
