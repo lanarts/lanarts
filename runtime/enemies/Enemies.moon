@@ -638,15 +638,15 @@ DataW.enemy_create {
     defeat_message: "Stara is dead!"
     sprite: "spr_enemies.bosses.stara"
     radius: 15
-    xpaward: 200
+    xpaward: 1000
     unique: true
     types: {"Black"}
     stats: {
         attacks: {{projectile: "Skullthrow"}}
-        hp: 200
+        hp: 400
         hpregen: 0.25
         movespeed: 3
-        powerfulness: 25
+        powerfulness: 45
         defence: 8
         willpower: 8
     }

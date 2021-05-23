@@ -570,16 +570,16 @@ void GameState::draw(bool drawhud) {
 	perf_timer_begin(FUNCNAME);
 
     Timer t;
-	ldraw::display_draw_start();
+	ldraw::display_draw_subframe_start();
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     screens.for_each_screen( [&]() {
         GameMapState* map = local_player()->get_map(this);
         do_with_map(map, [&]() {
-            adjust_view_to_dragging();
+            ldraw::display_subframe_start(screens.window_region());
 
-            ldraw::display_set_window_region(screens.window_region());
+            adjust_view_to_dragging();
 
             map->tiles().pre_draw(this);
 
@@ -599,8 +599,10 @@ void GameState::draw(bool drawhud) {
             for (size_t i = 0; i < safe_copy.size(); i++) {
                 safe_copy[i]->post_draw(this);
             }
-            // Set drawing region to full screen:
-            ldraw::display_set_window_region({0, 0, game_settings().view_width, game_settings().view_height});
+            ldraw::display_subframe_finish();
+            ldraw::display_subframe_start({0, 0, game_settings().view_width, game_settings().view_height});
+//            // Set drawing region to full screen:
+//            ldraw::display_set_window_region({0, 0, game_settings().view_width, game_settings().view_height});
             if (drawhud) {
                 game_hud().draw(this);
             }
@@ -608,12 +610,14 @@ void GameState::draw(bool drawhud) {
                 ldraw::draw_rectangle_outline(COL_WHITE, screens.window_region());
             }
 ////        ldraw::display_set_window_region(screens.window_region());
+            lua_api::luacall_overlay_draw(L); // Used for debug purposes
+
+
+            ldraw::display_subframe_finish();
         });
     });
-    lua_api::luacall_overlay_draw(L); // Used for debug purposes
 
-	ldraw::display_draw_finish();
-
+    ldraw::display_draw_subframe_finish();
     // std::cout << "STEP MS " << float(t.get_microseconds()) / 1000.0f << std::endl;
 //	glFinish(); // XXX: Apparently glFinish is not recommended
 	perf_timer_end(FUNCNAME);

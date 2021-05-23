@@ -3,6 +3,7 @@ local MiscSpellAndItemEffects = require "core.MiscSpellAndItemEffects"
 local EventLog = require "ui.EventLog"
 local Map = require "core.Map"
 local GameObject = require "core.GameObject"
+local World = require "core.World"
 
 Data.item_create {
     name = "Gold", -- An entry named gold must exist, it is handled specially
@@ -168,9 +169,11 @@ Data.item_create {
 
 local function scroll_of_exp_func(self, user)
     -- Collect ally players.
-    local ally_players = {user}
-    for _, ally in ipairs(Map.allies_list(user)) do
-        append(ally_players, ally)
+    local ally_players = {}
+    for _, pdata in ipairs(World.players) do
+        if pdata.instance.team == user.team then
+            append(ally_players, pdata.instance)
+        end
     end
     -- Grant all of them an XP share.
     local xp_granted = 100 / #ally_players

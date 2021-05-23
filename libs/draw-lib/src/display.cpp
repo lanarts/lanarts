@@ -190,11 +190,14 @@ void ldraw::display_set_fullscreen(bool fullscreen) {
     gl_set_fullscreen(fullscreen);
 }
 
+BBoxF LAZY_OFFSET, WORLD_OFFSET;
 void ldraw::display_set_window_region(const BBoxF &bbox) {
+    LAZY_OFFSET = bbox;
 //    gl_set_window_region(bbox.x1, bbox.y1, bbox.width(), bbox.height());
 }
 
 void ldraw::display_set_world_region(const BBoxF &bbox) {
+    WORLD_OFFSET = bbox;
 //    gl_set_world_region(bbox.x1, bbox.y1, bbox.x2, bbox.y2);
 }
 
@@ -203,23 +206,53 @@ bool ldraw::display_is_fullscreen() {
 }
 
 void ldraw::display_draw_start() {
-    // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame(MAIN_WINDOW);
     ImGui::NewFrame();
+
+}
+void ldraw::display_draw_subframe_start() {
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplSDL2_NewFrame(MAIN_WINDOW);
+
+}
+void ldraw::display_subframe_start(const BBoxF &bbox) {
+    // Start the Dear ImGui frame
+    ImGui::NewFrame();
+    display_set_window_region(bbox);
+}
+
+void ldraw::display_subframe_finish() {
+    // Rendering
+    ImGui::Render();
+    ImGuiIO& io = ImGui::GetIO();
+//    glViewport(LAZY_OFFSET.x1, LAZY_OFFSET.y1, LAZY_OFFSET.width(), LAZY_OFFSET.height()); //(int)io.DisplaySize.x, (int)io.DisplaySize.y);
+    ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+//    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+//    glClear(GL_COLOR_BUFFER_BIT);
+    auto* draw = ImGui::GetDrawData();
+    draw->DisplayPos = ImVec2(-LAZY_OFFSET.x1, -LAZY_OFFSET.y1);
+//    draw->DisplaySize = ImVec2(LAZY_OFFSET.width(), LAZY_OFFSET.height());
+    ImGui_ImplOpenGL3_RenderDrawData(draw);
 }
 
 void ldraw::display_draw_finish() {
     // Rendering
     ImGui::Render();
     ImGuiIO& io = ImGui::GetIO();
-    glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+    glViewport(0,0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    auto* draw = ImGui::GetDrawData();
+    ImGui_ImplOpenGL3_RenderDrawData(draw);
     SDL_GL_SwapWindow(MAIN_WINDOW);
 }
+
+void ldraw::display_draw_subframe_finish() {
+    SDL_GL_SwapWindow(MAIN_WINDOW);
+}
+
 
 Size ldraw::screen_size() {
     SDL_DisplayMode display_mode;

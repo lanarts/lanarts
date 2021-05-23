@@ -22,6 +22,11 @@ void display_set_world_region(const BBoxF& bbox);
 void display_draw_finish();
 void display_draw_start();
 
+void display_subframe_start(const BBoxF &bbox);
+void display_subframe_finish();
+void display_draw_subframe_start();
+void display_draw_subframe_finish();
+
 Size screen_size();
 Size display_size();
 void reset_blend_func();

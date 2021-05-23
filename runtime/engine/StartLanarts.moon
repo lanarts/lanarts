@@ -34,11 +34,48 @@ engine_init = (args) ->
         for i=2,n_players
             GameState.register_player("Player " .. i, classes[i], Engine.player_input, true, i - 1, 0)
 
+dump_module = (mod_name) ->
+    first_to_upper = (str) ->
+        return str\gsub("^%l", string.upper)
+    file_name = mod_name\gsub("%.", "/") .. ".d.ts"
+    f = io.open(file_name, "w")
+    interfaces = {}
+    export_interface = (name, value) ->
+        parts = {"export interface #{name} {"}
+        for k,v in pairs value
+            if type(v) == "function"
+                append parts, "    #{k}(this: void, ...args: any): any;"
+            elseif type(v) == "table"
+                export_interface(name .. (first_to_upper k), v)
+                append parts, "    #{k}: #{first_to_upper k};"
+            else
+                append parts, "    #{k}: any;"
+        append parts, "}"
+        append interfaces, table.concat(parts, "\n")
+
+    flush_interfaces = () ->
+        f\write(table.concat(interfaces, "\n"))
+        interfaces = {}
+
+    for k,v in pairs require(mod_name)
+        if type(v) == "function"
+            f\write("export function #{k}(this: void, ...args: any): any")
+        elseif type(v) == "table"
+            export_interface(k, v)
+            flush_interfaces()
+            f\write("export const #{k}: #{first_to_upper k};")
+        else 
+            f\write("export const #{k}: any;")
+    f\close()
+
 game_init = (args, load_file=nil) ->
     log "Initializing GameState object..."
     EngineInternal.init_gamestate()
     GameState = require("core.GameState")
     load_file = load_file or os.getenv("MULTI_LOAD_FILE")
+    -- Run require files that custom e.g. scenario
+    if args.require
+        require(args.require)
     if load_location_is_valid(load_file)
         GameState.load(load_file)
     else
@@ -62,6 +99,7 @@ run_lanarts = (raw_args) ->
     parser\option "--class3", "Player 3's class.", false
     parser\option "--class4", "Player 4's class.", false
     parser\option "--macro", "Script to run from debug_scripts/"
+    parser\option "--require", "Script to run from runtime/"
     parser\option "-C --context", "Amount of lines of Lua error context.", "4"
     parser\option "--settings", "Settings YAML file to use.", "settings.yaml"
     parser\option "--save", "Save file to save to.", false
@@ -72,6 +110,109 @@ run_lanarts = (raw_args) ->
 
     local entry_point, pregame_start, game_start, game_step
     entry_point = () ->
+        dump_module("objects.HealingSquare")
+        dump_module("objects.SpellObjects")
+        dump_module("enemies.EnemySpells")
+        dump_module("enemies.Enemies")
+        dump_module("tasks.TaskScheduler")
+        dump_module("input.GamepadInputSource")
+        dump_module("input.KeyboardDraw")
+        dump_module("map_descs.PixullochiaDepths")
+        dump_module("map_descs.OutpostStockroom")
+        dump_module("map_descs.SnakePitEntrance")
+        dump_module("map_descs.TempleSanctum")
+        dump_module("map_descs.Overworld")
+        dump_module("map_descs.HiveDepths")
+        dump_module("map_descs.TempleEntrance")
+        dump_module("map_descs.Hell")
+        dump_module("map_descs.OutpostEntrance")
+        dump_module("map_descs.Crypt")
+        dump_module("map_descs.World")
+        dump_module("map_descs.TempleChamber")
+        dump_module("map_descs.SnakePitDepths")
+        dump_module("map_descs.GraghsLair")
+        dump_module("map_descs.DebugArena")
+        dump_module("map_descs.HiveEntrance")
+        dump_module("map_descs.Underdungeon")
+        dump_module("map_descs.OgreLair")
+        dump_module("map_descs.PixullochiaEntrance")
+        dump_module("lint_config")
+        dump_module("scenarios.Scenario1")
+        dump_module("items.BonusesColor")
+        dump_module("items.BonusesArmour")
+        dump_module("items.BonusesUtils")
+        dump_module("items.BonusesWeapon")
+        dump_module("items.RandartsBonuses")
+        dump_module("items.Bonuses")
+        dump_module("items.BonusesSummons")
+        dump_module("items.BonusesAll")
+        dump_module("items.BonusesRing")
+        dump_module("items.Randarts")
+        dump_module("items.BonusesStats")
+        dump_module("items.RandartsUtils")
+        dump_module("engine.StartArena")
+        dump_module("engine.ResourceLoading")
+        dump_module("engine.StartMonsterEvals")
+        dump_module("engine.Arena")
+        dump_module("engine.StartLuaRepl")
+        dump_module("engine.StartBotTests")
+        dump_module("engine.StartEngine")
+        dump_module("engine.StartLanarts")
+        dump_module("engine.Settings")
+        dump_module("engine.StartVisualize")
+        dump_module("engine.InventoryManagement")
+        dump_module("engine.StartScenario1")
+        dump_module("tests.ExploreUtils")
+        dump_module("tests.main")
+        dump_module("spells.DefineWhiteSpells")
+        dump_module("spells.Projectiles")
+        dump_module("spells.DefineBlackSpells")
+        dump_module("spells.SummonUtils")
+        dump_module("spells.Spells2")
+        dump_module("spells.TypeEffectUtils")
+        dump_module("spells.SpellUtils")
+        dump_module("spells.DefineStormCloud")
+        dump_module("spells.DefineFireSpells")
+        dump_module("spells.Effects")
+        dump_module("menus.GameScenarioMenu")
+        dump_module("menus.AdventureMode")
+        dump_module("ai.BotInputSource")
+        dump_module("OrderedDict")
+        dump_module("DataWrapped")
+        dump_module("ui.ConsoleUtils")
+        dump_module("classes.Classes")
+        dump_module("maps.TemplateGeneration")
+        dump_module("maps.MapCompilerContext")
+        dump_module("maps.NewDungeons")
+        dump_module("maps.Maps")
+        dump_module("maps.GeometryUtils")
+        dump_module("maps.Vaults")
+        dump_module("maps.MapCompiler")
+        dump_module("maps.DebugUtils")
+        dump_module("maps.PolygonShapes")
+        dump_module("maps.MapRegionShapes")
+        dump_module("maps.NewMaps")
+        dump_module("maps.MapLink")
+        dump_module("maps.B2World")
+        dump_module("maps.MapRegion")
+        dump_module("maps.LinearMode")
+        dump_module("maps.MapDesc")
+        dump_module("maps.Places")
+        dump_module("maps.B2Utils")
+        dump_module("maps.DoorGeneration")
+        dump_module("maps.MapNodeFills")
+        dump_module("maps.ItemGroups")
+        dump_module("maps.MapElements")
+        dump_module("maps.VaultUtils")
+        dump_module("maps.GenerateUtils")
+        dump_module("maps.MapRegionUtils")
+        dump_module("maps.B2GenerateUtils")
+        dump_module("maps.B2WorldUtils")
+        dump_module("interactive.b2proper")
+        dump_module("interactive.b2onestep")
+        dump_module("interactive.b2test")
+        dump_module("maps.TemplateGeneration")
+        os.exit()
         if args.load
             return pregame_start(args.load)
         else
@@ -95,7 +236,7 @@ run_lanarts = (raw_args) ->
                 load_file = args.load
             game_init(args, load_file)
 
-            -- (2) Run macro script
+            -- (2) Run macros
             if args.macro
                 require("debug_scripts." .. args.macro)
 

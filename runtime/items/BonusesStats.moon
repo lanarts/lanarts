@@ -28,11 +28,11 @@ define_stat_bonus "Power",
 
 define_stat_bonus "Heart",
     "Gain Health.",
-    {hp: 15}
+    {hp: 20}
 
 define_stat_bonus "Mana",
     "Gain Mana.",
-    {mp: 15}
+    {mp: 20}
 
 define_stat_bonus "Regeneration",
     "Gain Health Regeneration.",

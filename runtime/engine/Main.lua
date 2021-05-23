@@ -6,6 +6,8 @@
 -- (1) Setup paths
 package.path = package.path .. ';dependencies/?.lua'
 package.path = package.path .. ';dependencies/socket/?.lua'
+package.path = package.path .. ';dependencies/lualib/?.lua'
+package.path = package.path .. ';compiled/?.lua'
 
 -- (2) Surpress noisy input
 require("Logging").set_log_level(os.getenv("LANARTS_LOG") or "WARN")

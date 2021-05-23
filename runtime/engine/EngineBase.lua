@@ -108,6 +108,10 @@ function Engine.first_map_create(...)
     return Engine.require("map_descs.World").generate()
 end
 
+function Engine.configure_map_generation(generator)
+    Engine.first_map_create = generator
+end
+
 function Engine.pre_serialize()
     local SerializationUtils = Engine.require "SerializationUtils"
     local timer = timer_create()

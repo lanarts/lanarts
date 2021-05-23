@@ -139,6 +139,8 @@ void EnemyInst::init(GameState* gs) {
 
 	float diffmult = monster_difficulty_multiplier(gs, etype());
 	core_stats().hp = static_cast<int>(ceil(core_stats().hp * diffmult));
+	core_stats().powerfulness = ceil(core_stats().powerfulness * diffmult);
+	stats().movespeed = stats().movespeed + (diffmult - 1) * 0.1;
 	core_stats().max_hp = static_cast<int>(ceil(core_stats().max_hp * diffmult));
 
 	lcall(etype().init_event, this);
