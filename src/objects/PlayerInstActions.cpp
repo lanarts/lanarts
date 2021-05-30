@@ -428,15 +428,15 @@ void PlayerInst::enqueue_io_actions(GameState* gs) {
 
     // If we haven't done anything, rest
    if (queued_actions.empty()) {
-   	queued_actions.push_back(game_action(gs, this, GameAction::USE_REST));
+       queued_actions.push_back(game_action(gs, this, GameAction::USE_REST));
    }
 
    ActionQueue only_passive_actions;
 
-   for (int i = 0; i < queued_actions.size(); i++) {
-   	GameAction::action_t act = queued_actions[i].act;
+   for (auto& queued_action : queued_actions) {
+   	GameAction::action_t act = queued_action.act;
    	if (act == GameAction::MOVE || act == GameAction::USE_REST) {
-   		only_passive_actions.push_back(queued_actions[i]);
+   		only_passive_actions.push_back(queued_action);
    	}
    }
 

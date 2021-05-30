@@ -90,13 +90,19 @@ MapCompiler = newtype {
                 return {polygon}
             when 'ellipse'
                 points = scheme_args.n_points or @rng\random(5, 8)
-                polygon = GenerateUtils.ellipse_points_0(@rng, {x,y}, {w, h}, points)
+                polygon = GenerateUtils.ellipse_points_0(x, y, w, h, points)
+                return {polygon}
+            when 'diamond'
+                -- Half chance of being rotated:
+                if @rng\randomf() > .5
+                    w, h = h, w
+                polygon = GenerateUtils.ellipse_points_0(x, y, w, h, 4)
                 return {polygon}
             when 'rectangle'
                 -- Half chance of being rotated:
                 if @rng\randomf() > .5
                     w, h = h, w
-                polygon = GenerateUtils.ellipse_points_0(@rng, {x,y}, {w, h}, 4)
+                polygon = GenerateUtils.ellipse_points_0(x, y, w*2, h*2, 4, math.pi/4)
                 return {polygon}
             else
                 parts = scheme\split(':')
@@ -157,7 +163,7 @@ MapCompiler = newtype {
     property: (node, property, default=nil) =>
         if node.properties[property] == nil
             return default
-        return ode.properties[property]
+        return node.properties[property]
     connect_map_regions: (regions, n_connections=2) =>
         B2GenerateUtils.connect_map_regions {
             rng: @rng

@@ -87,7 +87,7 @@ enable_testing()
 
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
     add_compile_options("-s" "USE_FREETYPE=1")
-    set(USE_FLAGS "-s MINIFY_HTML=0 -s USE_SDL=2 -s USE_FREETYPE=1 -s USE_SDL_MIXER=2 -s USE_SDL_IMAGE=2 -s TOTAL_MEMORY=800MB -s SDL2_IMAGE_FORMATS=[\\\"png\\\"] -s GL_UNSAFE_OPTS=1")
+    set(USE_FLAGS "--bind -s MINIFY_HTML=0 -s USE_SDL=2 -s USE_FREETYPE=1 -s USE_SDL_MIXER=2 -s USE_SDL_IMAGE=2 -s TOTAL_MEMORY=800MB -s SDL2_IMAGE_FORMATS=[\\\"png\\\"] -s GL_UNSAFE_OPTS=1")
     if ($ENV{BUILD_OPTIMIZE})
         set(CMAKE_BUILD_TYPE Release)
         add_definitions(-O3 -DNDEBUG -flto)

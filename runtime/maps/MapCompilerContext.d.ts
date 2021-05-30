@@ -1,17 +1,16 @@
-export interface Map {
+export interface MapCompilerContextSet {
 }
-
-export interface MapCompilerGetOptions {
-    label: string;
-    spawn_players?: boolean;
-}
-
 export interface MapCompilerContext {
-    register(label: string, map: any): void;
-    get(options: MapCompilerGetOptions): Map;
+    init(this: void, ...args: any): any;
+    add_pending_portal(this: void, ...args: any): any;
+    __newindex(this: void, ...args: any): any;
+    add_pending_feature(this: void, ...args: any): any;
+    isinstance(this: void, ...args: any): any;
+    create(this: void, ...args: any): any;
+    set: MapCompilerContextSet;
+    register(this: void, ...args: any): any;
+    __index(this: void, ...args: any): any;
+    get(this: void, ...args: any): any;
 }
-
-export interface MapCompilerContextMetaTable {
-    create(this: void): MapCompilerContext;
-}
-export const MapCompilerContext: MapCompilerContextMetaTable;
+export const MapCompilerContext: MapCompilerContext;
+export function make_on_player_interact(this: void, ...args: any): any

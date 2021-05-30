@@ -127,6 +127,9 @@ end
 local GAME_PADS = {}
 
 function Engine.player_input(player)
+    if __EMSCRIPTEN then
+        return (require "input.EmscriptenInputSource").create(player)
+    end
     if os.getenv("LANARTS_TESTCASE") then
         return (require "input.KeyboardInputSource").create(player)
     end

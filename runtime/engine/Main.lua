@@ -12,10 +12,13 @@ package.path = package.path .. ';compiled/?.lua'
 -- (2) Surpress noisy input
 require("Logging").set_log_level(os.getenv("LANARTS_LOG") or "WARN")
 
--- (3) Include necessary global modifications
+-- (3) Load TypeScriptToLua interop code
+require("lualib_bundle")
+
+-- (4) Include necessary global modifications
 require("GlobalVariableSetup")(--[[Surpress loading draw-related globals?]] os.getenv("LANARTS_HEADLESS") ~= nil)
 
--- (4) Ensure moonscript loading is inserted
+-- (5) Ensure moonscript loading is inserted
 require("moonscript.base").insert_loader()
 
 -- Default usage:

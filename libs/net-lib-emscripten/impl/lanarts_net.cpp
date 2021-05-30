@@ -3,8 +3,6 @@
  *  Primary functions for lanarts_net library
  */
 
-#include <enet/enet.h>
-
 #include <lcommon/strformat.h>
 
 #include "../lanarts_net.h"
@@ -12,18 +10,17 @@
 #include "ClientConnection.h"
 #include "ServerConnection.h"
 
+#include <emscripten/bind.h>
+
+using namespace std;
+using namespace emscripten;
+
 /**
  * Initialize the library
  * return true on success
  */
 bool lanarts_net_init(bool throw_on_error) {
-	if (enet_initialize() != 0) {
-		if (throw_on_error) {
-			__lnet_throw_connection_error("Couldn't initialize enet: %s\n");
-		}
-		return false;
-	}
-	return true;
+	return val::global("NetLibEmscripten").call<bool>("initialize");
 }
 
 /**
@@ -35,7 +32,7 @@ NetConnection* create_server_connection(int port) {
 }
 
 void lanarts_net_quit() {
-	enet_deinitialize();
+	val::global("NetLibEmscripten").call<void>("deinitialize");
 }
 
 /**

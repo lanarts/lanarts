@@ -14,7 +14,6 @@ add_subdirectory( yaml-cpp )
 add_subdirectory( lua-yaml )
 add_subdirectory( libxmi )
 add_subdirectory( UnitTest++ )
-add_subdirectory( physfs )
 add_subdirectory( imgui )
 
 if ($ENV{BUILD_HEADLESS})
