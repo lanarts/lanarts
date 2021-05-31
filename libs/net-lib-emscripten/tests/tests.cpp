@@ -24,7 +24,7 @@ static void run_tick() {
 	int i = 0;
 	for (NetConnection* conn : NETWORK) {
 		conn->poll(message_received, (void*)(long)i, -1);
-		printf("Got %d receives at %d\n", NETWORK_RECEIVES.at(i), i);
+		// printf("Got %d receives at %d\n", NETWORK_RECEIVES.at(i), i);
 		i++;
 	}
 }

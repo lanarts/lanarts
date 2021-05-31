@@ -1,80 +1,113 @@
-const ALL_RECEIVERS = -1;
-const SERVER_RECEIVER = 0;
-
-let __NETWORK = [];
+import * as client from "./client";
+import * as server from "./server";
 
 function createServerConnection() {
-  let acceptingConnections = true;
   console.log("netLibEmscripten.createServerConnection()");
-  const self = {
-    peerId: 0,
-    messages: [],
+
+  let connection,
+    taskQueue: Array<() => void> = [];
+  function withConnection(f) {
+    if (connection) {
+      f();
+    } else {
+      taskQueue.push(f);
+    }
+  }
+  (async function () {
+    connection = await client.createClientConnection();
+    for (const task of taskQueue) {
+      task();
+    }
+    taskQueue = [];
+  })();
+  return {
     destructor() {
-      __NETWORK.splice(__NETWORK.indexOf(this), 1);
+      withConnection(() => connection.destructor());
     },
     sendMessage(receiverPeerId: number, payload: string) {
-      if (receiverPeerId == -1) {
-        for (const peerConn of __NETWORK) {
-          if (peerConn !== this) {
-            peerConn.messages.push({
-              peer: this.peerId,
-              payload,
-            });
-          }
-        }
-      } else {
-        __NETWORK[receiverPeerId].messages.push({
-          peer: this.peerId,
-          payload,
-        });
-      }
+      withConnection(() => connection.sendMessage(receiverPeerId, payload));
     },
-    setAcceptingConnections(accepting: boolean) {
-      acceptingConnections = accepting;
+    setAcceptingConnections(isAccepting: boolean) {
+      withConnection(() => connection.setAcceptingConnections(isAccepting));
     },
     getMessages() {
-      const msgs = this.messages;
-      this.messages = [];
-      return msgs;
+      if (!connection) {
+        return [];
+      } else {
+        return connection.getMessages();
+      }
     },
   };
-  __NETWORK = [self];
-  return self;
+  // const self = {
+  //   peerId: 0,
+  //   nleConnection: server.createServerConnection(),
+  //   messages: [],
+  //   destructor() {
+  //     __NETWORK.splice(__NETWORK.indexOf(this), 1);
+  //   },
+  //   sendMessage(receiverPeerId: number, payload: string) {
+  //     if (receiverPeerId == -1) {
+  //       for (const peerConn of __NETWORK) {
+  //         if (peerConn !== this) {
+  //           peerConn.messages.push({
+  //             peer: this.peerId,
+  //             payload,
+  //           });
+  //         }
+  //       }
+  //     } else {
+  //       __NETWORK[receiverPeerId].messages.push({
+  //         peer: this.peerId,
+  //         payload,
+  //       });
+  //     }
+  //   },
+  //   setAcceptingConnections(accepting: boolean) {
+  //     acceptingConnections = accepting;
+  //   },
+  //   getMessages() {
+  //     const msgs = this.messages;
+  //     this.messages = [];
+  //     return msgs;
+  //   },
+  // };
+  // __NETWORK = [self];
+  // return self;
 }
 
 function createClientConnection(address: string) {
   console.log(`netLibEmscripten.createClientConnection(${address})`);
-  const self = {
-    peerId: __NETWORK.length,
-    messages: [],
+  let connection,
+    taskQueue: Array<() => void> = [];
+  function withConnection(f) {
+    if (connection) {
+      f();
+    } else {
+      taskQueue.push(f);
+    }
+  }
+  (async function () {
+    connection = await client.createClientConnection();
+    for (const task of taskQueue) {
+      task();
+    }
+    taskQueue = [];
+  })();
+  return {
     destructor() {
-      __NETWORK.splice(__NETWORK.indexOf(this), 1);
+      withConnection(() => connection.destructor());
     },
     sendMessage(receiverPeerId: number, payload: string) {
-      if (receiverPeerId == -1) {
-        for (const peerConn of __NETWORK) {
-          if (peerConn !== this) {
-            peerConn.messages.push({
-              peer: this.peerId,
-              payload,
-            });
-          }
-        }
-      } else {
-        __NETWORK[receiverPeerId].messages.push({
-          peer: this.peerId,
-          payload,
-        });
-      }
+      withConnection(() => connection.sendMessage(receiverPeerId, payload));
     },
     getMessages() {
-      const msgs = this.messages;
-      this.messages = [];
-      return msgs;
+      if (!connection) {
+        return [];
+      } else {
+        return connection.getMessages();
+      }
     },
   };
-  __NETWORK.push(self);
-  return self;
 }
 
 function initialize() {
